@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "RunOnStart",
+			"type": "shell",
+			"command": "pnpm dev",
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+		}
+	]
+}
