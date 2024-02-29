@@ -1,8 +1,38 @@
 <script lang="ts">
-	import { fetchCategories } from "@/lib/categories";
+	import { categories } from "@/services/categories";
+	import { updateProductService } from "@/services/products";
 
-	export let closeEditDialog: () => void;
-	export let editProductForm: (e: SubmitEvent) => void;
+	const closeEditDialog = () => {
+		const $dialog: HTMLDialogElement = document.getElementById(
+			"edit-product-dialog"
+		) as HTMLDialogElement;
+
+		$dialog.close();
+	};
+
+	const editProductForm = (e: SubmitEvent) => {
+		// Get the form data
+		const $form: HTMLFormElement = e.target as HTMLFormElement;
+		const _id = document.getElementById("edit-product-id");
+		const formData = new FormData($form);
+
+		const data = {
+			name: formData.get("edit-product-name") as string,
+			price: Number(formData.get("edit-product-price") as string),
+			categoryId: formData.get("edit-product-category") as string,
+			stock: Number(formData.get("edit-product-stock") as string),
+		};
+		const id = _id!.textContent!;
+
+		// Update the product
+		updateProductService(id, data);
+
+		// Close the dialog
+		const $dialog: HTMLDialogElement = document.getElementById(
+			"edit-product-dialog"
+		) as HTMLDialogElement;
+		$dialog.close();
+	};
 </script>
 
 <div>
@@ -27,6 +57,7 @@
 			id="edit-product-name"
 			name="edit-product-name"
 			required
+			autocomplete="off"
 		/>
 
 		<label for="edit-product-price">Precio (Venta)</label>
@@ -37,6 +68,7 @@
 			step="100"
 			required
 			name="edit-product-price"
+			autocomplete="off"
 		/>
 
 		<label for="edit-product-stock">Stock</label>
@@ -47,18 +79,17 @@
 			step="1"
 			required
 			name="edit-product-stock"
+			autocomplete="off"
 		/>
 
 		<label for="edit-product-category">Categoria</label>
 		<select name="edit-product-category" id="edit-product-category" required>
-			{#await fetchCategories() then categories}
-				{#each categories as category}
-					<option value={category.id}>{category.name}</option>
-				{/each}
-			{/await}
+			{#each $categories as category}
+				<option value={category.id}>{category.name}</option>
+			{/each}
 		</select>
 
-		<button>Añadir</button>
+		<button>Editar</button>
 	</form>
 </div>
 

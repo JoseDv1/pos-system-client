@@ -1,8 +1,8 @@
 ---
+import DashboardPage from "@/components/Dashboard/DashboardPage.svelte";
 import Layout from "@/layouts/Layout.astro";
-import Navbar from "@/components/Navbar/Navbar.astro";
 ---
 
 <Layout title="Dashboard">
-	<Navbar />
+	<DashboardPage client:load />
 </Layout>

@@ -1,6 +1,35 @@
 <script>
-	export let closeAddProviderDialog;
-	export let addProviderEvent;
+	import { addProviderService } from "@/services/providers";
+
+	const closeAddProviderDialog = () => {
+		document.getElementById("add-provider-dialog").close();
+	};
+	const addProviderEvent = async (e) => {
+		const $form = e.target;
+		const data = {
+			name: $form.name.value,
+			phone: $form.phone.value,
+			supplyDays: {
+				lunes: $form.monday.checked,
+				martes: $form.tuesday.checked,
+				miercoles: $form.wednesday.checked,
+				jueves: $form.thursday.checked,
+				viernes: $form.friday.checked,
+				sabado: $form.saturday.checked,
+				domingo: $form.sunday.checked,
+			},
+		};
+
+		// Set deliverDays to a space separated string of the selected days
+		data.supplyDays = Object.entries(data.supplyDays)
+			.filter(([, value]) => value)
+			.map(([key]) => key)
+			.join(" ");
+
+		// Add provider
+		await addProviderService(data);
+		document.getElementById("add-provider-dialog").close();
+	};
 </script>
 
 <div>
@@ -17,45 +46,45 @@
 	<form on:submit|preventDefault={addProviderEvent}>
 		<!-- Name, Phone, Days -->
 		<label for="name">Nombre</label>
-		<input type="text" id="name" />
+		<input type="text" id="name" autocomplete="off" />
 
 		<label for="phone">Telefono</label>
-		<input type="text" id="phone" />
+		<input type="text" id="phone" autocomplete="off" />
 
 		<fieldset>
 			<legend>Dias de entrega</legend>
 			<label for="monday">
-				<input type="checkbox" id="monday" />
+				<input type="checkbox" id="monday" autocomplete="off" />
 				Lunes
 			</label>
 
 			<label for="tuesday">
-				<input type="checkbox" id="tuesday" />
+				<input type="checkbox" id="tuesday" autocomplete="off" />
 				Martes
 			</label>
 
 			<label for="wednesday">
-				<input type="checkbox" id="wednesday" />
+				<input type="checkbox" id="wednesday" autocomplete="off" />
 				Miercoles
 			</label>
 
 			<label for="thursday">
-				<input type="checkbox" id="thursday" />
+				<input type="checkbox" id="thursday" autocomplete="off" />
 				Jueves
 			</label>
 
 			<label for="friday">
-				<input type="checkbox" id="friday" />
+				<input type="checkbox" id="friday" autocomplete="off" />
 				Viernes
 			</label>
 
 			<label for="saturday">
-				<input type="checkbox" id="saturday" />
+				<input type="checkbox" id="saturday" autocomplete="off" />
 				Sabado
 			</label>
 
 			<label for="sunday">
-				<input type="checkbox" id="sunday" />
+				<input type="checkbox" id="sunday" autocomplete="off" />
 				Domingo
 			</label>
 		</fieldset>

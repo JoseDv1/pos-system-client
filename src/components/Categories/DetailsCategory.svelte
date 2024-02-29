@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { deleteCategoryService } from "@/services/categories";
+
 	export let closeDetailCategoryDialog: any;
 	export let openCategory: any;
 	export let updateCategoryEvent: any;
-	export let deleteCategory: any;
 	openCategory.products = [];
 </script>
 
@@ -24,7 +25,8 @@
 					class="btn-delete"
 					on:click={() => {
 						if (confirm("¿Estás seguro de eliminar esta categoría?")) {
-							deleteCategory(openCategory.id);
+							deleteCategoryService(openCategory.id);
+							closeDetailCategoryDialog();
 						}
 					}}>Eliminar</button
 				>
@@ -103,7 +105,6 @@
 
 	table {
 		width: 100%;
-		table-layout: fixed;
 	}
 
 	th {

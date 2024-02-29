@@ -4,7 +4,15 @@
 		{
 			"label": "RunOnStart",
 			"type": "shell",
-			"command": "pnpm dev",
+			"command": "pnpm preview",
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+		},
+		{
+			"label": "RunServerOnStart",
+			"type": "shell",
+			"command": "cd ~/dev/pos-system && pnpm dev",
 			"runOptions": {
 				"runOn": "folderOpen"
 			},

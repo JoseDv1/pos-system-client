@@ -1,8 +1,34 @@
 <script lang="ts">
-	import { fetchCategories } from "@/lib/categories";
+	import { categories } from "@/services/categories";
+	import { addProductService } from "@/services/products";
 
-	export let closeCreateDialog: () => void;
-	export let addProduct: (e: SubmitEvent) => void;
+	const closeCreateDialog = () => {
+		const $dialog: HTMLDialogElement = document.getElementById(
+			"add-product-dialog"
+		) as HTMLDialogElement;
+
+		$dialog.close();
+	};
+
+	const addProductEvent = async (e: SubmitEvent) => {
+		// Get the form data
+		const $form: HTMLFormElement = e.target as HTMLFormElement;
+		const formData = new FormData($form);
+
+		const data = {
+			name: formData.get("add-product-name") as string,
+			price: Number(formData.get("add-product-price") as string),
+			categoryId: formData.get("add-product-category") as string,
+		};
+
+		addProductService(data);
+		$form.reset();
+
+		// Close the dialog
+		const $dialog: HTMLDialogElement = document.getElementById(
+			"add-product-dialog"
+		) as HTMLDialogElement;
+	};
 </script>
 
 <div>
@@ -15,9 +41,15 @@
 		role="button"
 		aria-label="Close dialog">&times;</span
 	>
-	<form on:submit|preventDefault={addProduct}>
+	<form on:submit|preventDefault={addProductEvent}>
 		<label for="add-product-name">Nombre</label>
-		<input type="text" id="add-product-name" name="add-product-name" required />
+		<input
+			type="text"
+			id="add-product-name"
+			name="add-product-name"
+			required
+			autocomplete="off"
+		/>
 
 		<label for="add-product-price">Precio (Venta)</label>
 		<input
@@ -27,16 +59,15 @@
 			step="100"
 			required
 			name="add-product-price"
+			autocomplete="off"
 		/>
 
 		<label for="add-product-category">Categoria</label>
 		<select name="add-product-category" id="add-product-category" required>
-			{#await fetchCategories() then categories}
-				<option disabled selected value="">Selecciona una categoria</option>
-				{#each categories as category}
-					<option value={category.id}>{category.name}</option>
-				{/each}
-			{/await}
+			<option disabled selected value="">Selecciona una categoria</option>
+			{#each $categories as category}
+				<option value={category.id}>{category.name}</option>
+			{/each}
 		</select>
 
 		<button>Añadir</button>

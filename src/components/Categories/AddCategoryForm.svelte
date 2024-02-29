@@ -1,6 +1,12 @@
-<script>
-	export let closeCreateCategoryDialog;
-	export let createCategoryEvent;
+<script lang="ts">
+	export let createCategoryEvent: (e: SubmitEvent) => void;
+
+	const closeCreateCategoryDialog = () => {
+		const $dialog = document.getElementById(
+			"add-category-dialog"
+		) as HTMLDialogElement;
+		$dialog.close();
+	};
 </script>
 
 <div>
@@ -21,6 +27,7 @@
 			name="add-category-name"
 			required
 			placeholder="Escribe el nombre de la categoria..."
+			autocomplete="off"
 		/>
 
 		<label for="add-category-description">Descripción</label>

@@ -1,5 +1,10 @@
-<script>
-	export let openCreateCategoryDialog;
+<script lang="ts">
+	const openCreateCategoryDialog = () => {
+		const $dialog = document.getElementById(
+			"add-category-dialog"
+		) as HTMLDialogElement;
+		$dialog!.showModal();
+	};
 </script>
 
 <header>

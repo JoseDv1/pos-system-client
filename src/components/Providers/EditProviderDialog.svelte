@@ -1,6 +1,42 @@
 <script>
-	export let closeEditProviderDialog;
-	export let editProviderEvent;
+	import { updateProviderService } from "@/services/providers";
+
+	const closeEditProviderDialog = () => {
+		document.getElementById("edit-provider-dialog").close();
+	};
+
+	const editProviderEvent = (e) => {
+		const $form = e.target;
+		const $id = document.getElementById("edit-provider-id");
+		const $name = $form.querySelector("#edit-name");
+		const $phone = $form.querySelector("#edit-phone");
+		const $days = $form.querySelectorAll("input[type=checkbox]");
+		const data = {
+			name: $name.value,
+			phone: $phone.value,
+			supplyDays: {
+				lunes: $days[0].checked,
+				martes: $days[1].checked,
+				miercoles: $days[2].checked,
+				jueves: $days[3].checked,
+				viernes: $days[4].checked,
+				sabado: $days[5].checked,
+				domingo: $days[6].checked,
+			},
+		};
+
+		// Set deliverDays to a space separated string of the selected days
+		data.supplyDays = Object.entries(data.supplyDays)
+			.filter(([, value]) => value)
+			.map(([key]) => key)
+			.join(" ");
+
+		// Update provider from the server
+		updateProviderService($id.textContent, data);
+
+		// Close dialog
+		closeEditProviderDialog();
+	};
 </script>
 
 <div>
@@ -20,45 +56,50 @@
 	>
 	<form on:submit|preventDefault={editProviderEvent}>
 		<label for="edit-name">Nombre</label>
-		<input type="text" id="edit-name" name="edit_name" />
+		<input type="text" id="edit-name" name="edit_name" autocomplete="off" />
 
 		<label for="edit-phone">Telefono</label>
-		<input type="text" id="edit-phone" name="edit_phone" />
+		<input type="text" id="edit-phone" name="edit_phone" autocomplete="off" />
 
 		<fieldset>
 			<legend>Dias de entrega</legend>
 			<label for="edit-lunes">
-				<input type="checkbox" id="edit-lunes" name="edit_lunes" />
+				<input
+					type="checkbox"
+					id="edit-lunes"
+					name="edit_lunes"
+					autocomplete="off"
+				/>
 				Lunes
 			</label>
 
 			<label for="edit-martes">
-				<input type="checkbox" id="edit-martes" />
+				<input type="checkbox" id="edit-martes" autocomplete="off" />
 				Martes
 			</label>
 
 			<label for="edit-miercoles">
-				<input type="checkbox" id="edit-miercoles" />
+				<input type="checkbox" id="edit-miercoles" autocomplete="off" />
 				Miercoles
 			</label>
 
 			<label for="edit-jueves">
-				<input type="checkbox" id="edit-jueves" />
+				<input type="checkbox" id="edit-jueves" autocomplete="off" />
 				Jueves
 			</label>
 
 			<label for="edit-viernes">
-				<input type="checkbox" id="edit-viernes" />
+				<input type="checkbox" id="edit-viernes" autocomplete="off" />
 				Viernes
 			</label>
 
 			<label for="edit-sabado">
-				<input type="checkbox" id="edit-sabado" />
+				<input type="checkbox" id="edit-sabado" autocomplete="off" />
 				Sabado
 			</label>
 
 			<label for="edit-domingo">
-				<input type="checkbox" id="edit-domingo" />
+				<input type="checkbox" id="edit-domingo" autocomplete="off" />
 				Domingo
 			</label>
 		</fieldset>

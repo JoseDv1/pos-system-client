@@ -1,9 +1,26 @@
 <script>
-	export let providers;
-	export let loading;
-	export let deleteProvider;
-	export let openEditProviderDialog;
+	import { deleteProviderService, providers } from "@/services/providers";
+	import { loading } from "@/services/stores";
 
+	const openEditProviderDialog = (provider) => {
+		const $dialog = document.getElementById("edit-provider-dialog");
+		$dialog.showModal();
+
+		const $id = $dialog.querySelector("#edit-provider-id");
+		$id.textContent = provider.id;
+
+		// Set provider data to the form
+		const $form = $dialog.querySelector("form");
+		const $name = $form.querySelector("#edit-name");
+		const $phone = $form.querySelector("#edit-phone");
+		const $days = $form.querySelectorAll("input[type=checkbox]");
+
+		$name.value = provider.name;
+		$phone.value = provider.phone;
+		$days.forEach((day) => {
+			day.checked = provider.supplyDays.includes(day.id.split("-")[1]);
+		});
+	};
 	const parseDays = (days) => {
 		const daysArray = days.split(" ");
 		return daysArray.join(" - ");
@@ -18,28 +35,37 @@
 		<th>Acciones</th>
 	</tr>
 
-	{#if loading}
+	{#if $loading}
 		<tr>
 			<td colspan="4" class="load"></td>
 		</tr>
+	{:else if $providers.length === 0}
+		<tr>
+			<td colspan="4">No hay proveedores</td>
+		</tr>
 	{:else}
-		{#each providers as prov}
+		{#each $providers as prov}
 			<tr>
 				<td>{prov.name}</td>
 				<td>{prov.phone}</td>
 				<td>{parseDays(prov.supplyDays)}</td>
 				<td>
-					<button class="btn-edit" on:click={() => openEditProviderDialog(prov)}
-						>Editar</button
+					<button
+						class="btn-edit"
+						on:click={() => openEditProviderDialog(prov)}
 					>
+						<box-icon name="edit" color="currentColor"></box-icon>
+					</button>
 					<button
 						class="btn-delete"
 						on:click={async () => {
 							if (confirm("¿Estas seguro de eliminar este proveedor?")) {
-								await deleteProvider(prov.id);
+								await deleteProviderService(prov.id);
 							}
-						}}>Eliminar</button
+						}}
 					>
+						<box-icon name="trash" color="currentColor"></box-icon>
+					</button>
 				</td>
 			</tr>
 		{/each}
@@ -49,7 +75,6 @@
 <style>
 	table {
 		width: 100%;
-		table-layout: fixed;
 		background-color: white;
 		border-radius: var(--radius);
 		padding: 1rem;
@@ -140,5 +165,9 @@
 		100% {
 			content: "Cargando...";
 		}
+	}
+
+	td[colspan="4"] {
+		text-align: center;
 	}
 </style>

@@ -2,16 +2,14 @@
 	import AddCategoryForm from "./AddCategoryForm.svelte";
 	import DetailsCategory from "./DetailsCategory.svelte";
 
-	export let closeCreateCategoryDialog;
 	export let createCategoryEvent;
 	export let closeDetailCategoryDialog;
 	export let openCategory;
 	export let updateCategoryEvent;
-	export let deleteCategory;
 </script>
 
 <dialog id="add-category-dialog" class="add">
-	<AddCategoryForm {closeCreateCategoryDialog} {createCategoryEvent} />
+	<AddCategoryForm {createCategoryEvent} />
 </dialog>
 
 <dialog id="detail-category-dialog" on:blur={() => closeDetailCategoryDialog()}>
@@ -19,7 +17,6 @@
 		{closeDetailCategoryDialog}
 		{openCategory}
 		{updateCategoryEvent}
-		{deleteCategory}
 	/>
 </dialog>
 

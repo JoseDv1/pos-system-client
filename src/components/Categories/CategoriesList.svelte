@@ -1,21 +1,22 @@
 <script>
-	export let categories = [];
-	export let loading;
+	import { categories } from "@/services/categories";
+	import { loading } from "@/services/stores";
+
 	export let openDetailCategoryDialog;
 </script>
 
 <section>
-	{#if loading}
-		<p>Cargando...</p>
+	{#if $loading}
+		<p>Loading...</p>
 	{:else}
-		{#each categories as category}
+		{#each $categories as category}
 			<article>
 				<h1>{category?.name}</h1>
 				<p>
 					{category?.description}
 				</p>
 				<button on:click={() => openDetailCategoryDialog(category.id)}>
-					See Products</button
+					Ver Productos</button
 				>
 			</article>
 		{/each}

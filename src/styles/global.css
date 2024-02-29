@@ -1,9 +1,9 @@
 :root {
 	--radius: 10px;
-	--primary: hsl(39.06, 90%, 50%);
-	--primary75: hsla(39.06, 90%, 50%, 75%);
-	--primary50: hsla(39.06, 90%, 50%, 50%);
-	--primary25: hsla(39.06, 90%, 50%, 25%);
+	--primary: hsl(40, 90%, 50%);
+	--primary75: hsla(40, 90%, 50%, 75%);
+	--primary50: hsla(40, 90%, 50%, 50%);
+	--primary25: hsla(40, 90%, 50%, 25%);
 
 	--light: hsl(0, 0%, 93%);
 	--light75: hsla(0, 0%, 93%, 75%);
@@ -15,6 +15,13 @@
 	--danger75: hsla(0, 90%, 50%, 75%);
 	--danger50: hsla(0, 90%, 50%, 50%);
 	--danger25: hsla(0, 90%, 50%, 25%);
+
+	--success: hsl(100, 90%, 50%);
+	--success75: hsla(100, 90%, 50%, 75%);
+	--success50: hsla(100, 90%, 50%, 50%);
+	--success25: hsla(100, 90%, 50%, 25%);
+
+
 }
 
 
@@ -28,7 +35,7 @@ body {
 	position: fixed;
 	top: 1rem;
 	right: 1rem;
-	background-color: var(--primary);
+	background-color: var(--primary75);
 	color: white;
 	padding: 1rem;
 	border-radius: var(--radius);
@@ -44,6 +51,12 @@ body {
 .toast.error {
 	background-color: var(--danger75);
 }
+
+.toast.success {
+	background-color: var(--success75);
+}
+
+
 
 @keyframes slideIn {
 	0% {
@@ -69,10 +82,38 @@ button {
 .btn-edit {
 	background-color: var(--primary75);
 	color: white;
-	margin-right: 0.5rem;
 }
 
 .btn-delete {
 	background-color: var(--danger75);
+	color: white;
+}
+
+.btn-success {
+	background-color: var(--success);
+	color: white;
+}
+
+/* Esconder la scrollbar en los dialogos */
+dialog::-webkit-scrollbar {
+	display: none;
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
+}
+
+/* Estados de las Ventas */
+.pending {
+	background-color: var(--danger75);
+	padding: 0.25rem 0.5rem;
+	border-radius: var(--radius);
+	color: white;
+}
+
+.pay {
+	background-color: var(--success75);
+	padding: 0.25rem 0.5rem;
+	border-radius: var(--radius);
 	color: white;
 }

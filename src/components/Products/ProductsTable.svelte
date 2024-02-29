@@ -1,12 +1,29 @@
 <script lang="ts">
-	import { parseId } from "@/lib/parseId";
+	import { parseId } from "@/services/utils";
+	import { loading } from "@/services/stores";
+	import { deleteProductService } from "@/services/products";
+	import type { Product } from "@/types";
 
-	export let products: any[] = [];
-	export let loading: boolean;
-	export let deleteProduct: (id: string) => void;
-	export let openEditDialog: any;
-	export let filterClickEvent: (e: any) => void;
-	// export let filterProductsByName: any;
+	export let products: Product[] = [];
+	export let filterClickEvent: (e: MouseEvent) => void;
+	const openEditDialog = (product: Product) => {
+		const $dialog: HTMLDialogElement = document.getElementById(
+			"edit-product-dialog"
+		) as HTMLDialogElement;
+		$dialog!.showModal();
+
+		// Set the product to edit in the form
+		const $form: HTMLFormElement = $dialog.querySelector(
+			"form"
+		) as HTMLFormElement;
+		const $id = $dialog.querySelector("#edit-product-id") as HTMLSpanElement;
+
+		$form["edit-product-name"].value = product.name;
+		$form["edit-product-price"].value = product.price;
+		$form["edit-product-category"].value = product.category.id;
+		$form["edit-product-stock"].value = product.stock;
+		$id.textContent = product.id;
+	};
 </script>
 
 <table id="products-table">
@@ -19,9 +36,13 @@
 		<th>Acciones</th>
 	</tr>
 
-	{#if loading}
+	{#if $loading}
 		<tr>
-			<td colspan="5" class="load"></td>
+			<td colspan="5"> Cargando...</td>
+		</tr>
+	{:else if products.length === 0}
+		<tr>
+			<td colspan="5">No hay productos</td>
 		</tr>
 	{:else}
 		{#each products as product}
@@ -40,7 +61,7 @@
 						class="btn-delete"
 						on:click={() => {
 							if (confirm("¿Estás seguro de eliminar este producto?")) {
-								deleteProduct(product.id);
+								deleteProductService(product.id);
 							}
 						}}
 					>
@@ -55,7 +76,6 @@
 <style>
 	table {
 		width: 100%;
-		table-layout: fixed;
 		background-color: white;
 		border-radius: var(--radius);
 		padding: 1rem;
@@ -156,5 +176,9 @@
 		background-color: var(--primary);
 		color: white;
 		transition: all 0.3s ease-in-out;
+	}
+
+	td[colspan="5"] {
+		text-align: center;
 	}
 </style>
