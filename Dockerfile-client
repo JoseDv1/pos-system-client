@@ -1,17 +1,18 @@
 # Use the official image as a parent image
-FROM node:lts-slim AS base
+FROM node:21.6.1-slim
 WORKDIR /client
 
 COPY . . 
-RUN npm intall -g pnpm
+RUN npm install -g pnpm
 RUN pnpm install
 RUN pnpm run build
 
+ENV PUBLIC_API_URL=http://localhost:3000/api
 ENV HOST=0.0.0.0
 ENV PORT=4321
 
 EXPOSE 4321
-RUN node dist/server/entry.cjs
+CMD ["node","dist/server/entry.mjs"]
 
 
 
