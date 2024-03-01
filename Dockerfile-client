@@ -1,0 +1,17 @@
+# Use the official image as a parent image
+FROM node:lts-slim AS base
+WORKDIR /client
+
+COPY . . 
+RUN npm intall -g pnpm
+RUN pnpm install
+RUN pnpm run build
+
+ENV HOST=0.0.0.0
+ENV PORT=4321
+
+EXPOSE 4321
+RUN node dist/server/entry.cjs
+
+
+
