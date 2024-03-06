@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
+
 	const openAddDialog = () => {
 		const dialog = document.getElementById(
 			"add-client-dialog"
@@ -11,7 +13,7 @@
 	<h1>Meseros</h1>
 
 	<button class="btn-edit" on:click={() => openAddDialog()}>
-		<box-icon name="plus" color="currentColor"></box-icon>
+		{@html PlusIcon}
 		Agregar
 	</button>
 </header>

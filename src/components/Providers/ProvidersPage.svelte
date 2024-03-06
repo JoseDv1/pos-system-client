@@ -2,6 +2,8 @@
 	import ProvidersTable from "./ProvidersTable.svelte";
 	import AddProviderDialog from "./AddProviderDialog.svelte";
 	import EditProviderDialog from "./EditProviderDialog.svelte";
+
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
 </script>
 
 <main>
@@ -16,7 +18,7 @@
 					document.getElementById("add-provider-dialog").showModal();
 				}}
 			>
-				<box-icon name="plus" color="currentColor"></box-icon>
+				{@html PlusIcon}
 				Agregar</button
 			>
 		</div>

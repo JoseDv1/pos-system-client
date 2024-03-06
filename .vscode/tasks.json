@@ -12,7 +12,7 @@
 		{
 			"label": "RunServerOnStart",
 			"type": "shell",
-			"command": "cd ~/dev/pos-system-project/server && pnpm dev",
+			"command": "cd ../server && pnpm dev",
 			"runOptions": {
 				"runOn": "folderOpen"
 			},

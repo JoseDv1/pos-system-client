@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
+
 	const openCreateCategoryDialog = () => {
 		const $dialog = document.getElementById(
 			"add-category-dialog"
@@ -10,7 +12,8 @@
 <header>
 	<h1>Categorias</h1>
 	<button on:click={() => openCreateCategoryDialog()}>
-		<box-icon name="plus" color="currentColor"></box-icon> Añadir Categoria
+		{@html PlusIcon}
+		Añadir Categoria
 	</button>
 </header>
 

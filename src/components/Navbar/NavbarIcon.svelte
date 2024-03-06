@@ -1,13 +1,15 @@
 <script lang="ts">
+	import type { SvelteComponent } from "svelte";
+
 	export let label: string;
-	export let bx_name: string;
+	export let icon: string;
 	export let href: string;
 	export let className: string;
 </script>
 
 <li class={`${className}`}>
 	<a {href}>
-		<box-icon name={bx_name} color="currentColor"></box-icon>
+		{@html icon}
 		<p>{label}</p>
 	</a>
 </li>

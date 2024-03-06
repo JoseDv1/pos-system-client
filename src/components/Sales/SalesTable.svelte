@@ -7,6 +7,11 @@
 	} from "@/services/sales";
 	import { loading } from "@/services/stores";
 	import { fetchProductsOnSale, printSale } from "@/services/productsOnSale";
+
+	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
+	import PrinterIcon from "@/assets/svgs/bx-printer.svg?raw";
+	import MoneyWithdrawIcon from "@/assets/svgs/bx-money-withdraw.svg?raw";
+	import RightArrowAltIcon from "@/assets/svgs/bx-right-arrow-alt.svg?raw";
 </script>
 
 <table>
@@ -55,7 +60,7 @@
 								if (confirm("¿Estás muy seguro?")) {
 									if (
 										confirm(
-											"Elimiar la venta hara que se borre del historial y no se pueda recuperar nunca"
+											"Elimiar la venta hara que se borre del historial y no se pueda recuperar nunca si tiene elemento adentro no se eliminara aun asi"
 										)
 									) {
 										deleteSaleService(sale.id);
@@ -64,7 +69,7 @@
 							}
 						}}
 					>
-						<box-icon name="trash-alt" color="currentColor"></box-icon>
+						{@html TrashIcon}
 					</button>
 					<button
 						class="btn-edit"
@@ -74,7 +79,7 @@
 							}
 						}}
 					>
-						<box-icon name="printer" color="currentColor"></box-icon>
+						{@html PrinterIcon}
 					</button>
 					<button
 						class="btn-success"
@@ -82,17 +87,13 @@
 							if (confirm("¿Estás seguro de marcar esta venta como pagada?")) {
 								markSaleAsPaidService(sale.id);
 							}
-
-							if (confirm("¿Deseas imprimir el recibo?")) {
-								fetchProductsOnSale(sale.id).then(printSale);
-							}
 						}}
 					>
-						<box-icon name="money-withdraw" color="currentColor"></box-icon>
+						{@html MoneyWithdrawIcon}
 					</button>
 
 					<a class="btn-edit" href={`/dashboard/sales/${sale?.id}`}>
-						<box-icon name="right-arrow-alt" color="currentColor"></box-icon>
+						{@html RightArrowAltIcon}
 					</a>
 				</td>
 			</tr>

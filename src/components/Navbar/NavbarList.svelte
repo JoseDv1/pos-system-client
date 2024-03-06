@@ -2,6 +2,15 @@
 	import { onMount } from "svelte";
 	import NavbarIcon from "./NavbarIcon.svelte";
 
+	import LeftArrowAlt from "@/assets/svgs/bx-left-arrow-alt.svg?raw";
+	import Home from "@/assets/svgs/bx-home.svg?raw";
+	import Drink from "@/assets/svgs/bx-drink.svg?raw";
+	import PurchaseTag from "@/assets/svgs/bx-purchase-tag.svg?raw";
+	import Receipt from "@/assets/svgs/bx-receipt.svg?raw";
+	import Package from "@/assets/svgs/bx-package.svg?raw";
+	import Car from "@/assets/svgs/bx-car.svg?raw";
+	import Group from "@/assets/svgs/bx-group.svg?raw";
+
 	let currentUrl = "";
 	onMount(() => {
 		currentUrl = window.location.pathname;
@@ -14,48 +23,49 @@
 			window.history.back();
 		}}
 	>
-		<box-icon name="left-arrow-alt" color="currentColor"></box-icon>
+		{@html LeftArrowAlt}
 		<p>Atras</p>
 	</button>
+
 	<NavbarIcon
 		href="/dashboard"
-		bx_name="home"
+		icon={Home}
 		label="Inicio"
 		className={currentUrl === "/dashboard" ? "current-page" : ""}
 	/>
 	<NavbarIcon
 		href="/dashboard/products"
-		bx_name="drink"
+		icon={Drink}
 		label="Productos"
 		className={currentUrl === "/dashboard/products" ? "current-page" : ""}
 	/>
 	<NavbarIcon
 		href="/dashboard/categories"
-		bx_name="purchase-tag"
+		icon={PurchaseTag}
 		label="Categorias"
 		className={currentUrl === "/dashboard/categories" ? "current-page" : ""}
 	/>
 	<NavbarIcon
 		href="/dashboard/sales"
-		bx_name="receipt"
+		icon={Receipt}
 		label="Ventas"
 		className={currentUrl === "/dashboard/sales" ? "current-page" : ""}
 	/>
 	<!-- <NavbarIcon
 		href="/dashboard/supplies"
-		bx_name="package"
+		icon={Package}
 		label="Provisiones"
 		className={currentUrl === "/dashboard/supplies" ? "current-page" : ""}
 	/> -->
 	<NavbarIcon
 		href="/dashboard/providers"
-		bx_name="car"
+		icon={Car}
 		label="Proveedores"
 		className={currentUrl === "/dashboard/providers" ? "current-page" : ""}
 	/>
 	<NavbarIcon
 		href="/dashboard/waiters"
-		bx_name="group"
+		icon={Group}
 		label="Meseros"
 		className={currentUrl === "/dashboard/waiters" ? "current-page" : ""}
 	/>

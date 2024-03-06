@@ -2,6 +2,11 @@
 	import { search } from "@/services/products";
 	import { generateReport, products } from "@/services/products";
 
+	import FileIcon from "@/assets/svgs/bx-file.svg?raw";
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
+	import SortDownIcon from "@/assets/svgs/bx-sort-down.svg?raw";
+	import SortUpIcon from "@/assets/svgs/bx-sort-up.svg?raw";
+
 	export let filterOrderDesc: boolean;
 	export let filterByKey: (key: string) => void;
 	export let filterkey: string;
@@ -30,7 +35,8 @@
 
 	<div>
 		<button on:click={() => generateReport($products)}>
-			<box-icon name="file" color="currentColor"></box-icon> Generar Reporte
+			{@html FileIcon}
+			Generar Reporte
 		</button>
 
 		<button
@@ -40,16 +46,17 @@
 			}}
 		>
 			{#if filterOrderDesc}
-				<box-icon name="sort-down" type="solid" color="currentColor"></box-icon>
+				{@html SortDownIcon}
 				Orden Descendente
 			{:else}
-				<box-icon name="sort-up" type="solid" color="currentColor"></box-icon>
+				{@html SortUpIcon}
 				Orden Ascendente
 			{/if}
 		</button>
 
 		<button on:click={openCreateDialog}>
-			<box-icon name="plus" color="currentColor"></box-icon> Añadir Producto
+			{@html PlusIcon}
+			Añadir Producto
 		</button>
 	</div>
 </header>

@@ -6,6 +6,9 @@
 	import { loading } from "@/services/stores";
 	import type { SaleProduct } from "@/types";
 
+	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
+	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
+
 	const openEditProductOnSaleDialog = (productsOnSale: SaleProduct) => {
 		// Get the dialog element
 		const $dialog = document.getElementById(
@@ -68,7 +71,7 @@
 							openEditProductOnSaleDialog(saleProduct);
 						}}
 					>
-						<box-icon name="edit" color="currentColor"></box-icon>
+						{@html EditIcon}
 					</button>
 					<button
 						class="btn-delete"
@@ -83,7 +86,7 @@
 							}
 						}}
 					>
-						<box-icon name="trash" color="currentColor"></box-icon>
+						{@html TrashIcon}
 					</button>
 				</td>
 			</tr>

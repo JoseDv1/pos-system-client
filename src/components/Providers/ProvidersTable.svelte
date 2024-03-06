@@ -2,6 +2,9 @@
 	import { deleteProviderService, providers } from "@/services/providers";
 	import { loading } from "@/services/stores";
 
+	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
+	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
+
 	const openEditProviderDialog = (provider) => {
 		const $dialog = document.getElementById("edit-provider-dialog");
 		$dialog.showModal();
@@ -54,7 +57,7 @@
 						class="btn-edit"
 						on:click={() => openEditProviderDialog(prov)}
 					>
-						<box-icon name="edit" color="currentColor"></box-icon>
+						{@html EditIcon}
 					</button>
 					<button
 						class="btn-delete"
@@ -64,7 +67,7 @@
 							}
 						}}
 					>
-						<box-icon name="trash" color="currentColor"></box-icon>
+						{@html TrashIcon}
 					</button>
 				</td>
 			</tr>

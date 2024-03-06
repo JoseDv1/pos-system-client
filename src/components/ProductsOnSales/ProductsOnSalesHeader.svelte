@@ -3,6 +3,8 @@
 	import { productsOnSale, printSale } from "@/services/productsOnSale";
 	import { markSaleAsPaidService } from "@/services/sales";
 
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
+
 	function openAddProductOnSaleDialog() {
 		const dialog = document.getElementById("add-product-on-sale-dialog");
 		dialog.showModal();
@@ -39,7 +41,7 @@
 				Imprimir</button
 			>
 			<button class="btn-edit" on:click={() => openAddProductOnSaleDialog()}>
-				<box-icon name="plus" color="currentColor"></box-icon>
+				{@html PlusIcon}
 				Agregar Productos</button
 			>
 		</div>

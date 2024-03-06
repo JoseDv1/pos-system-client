@@ -4,6 +4,9 @@
 	import type { Client } from "@/types";
 	import { loading } from "@/services/stores";
 
+	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
+	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
+
 	const openEditDialog = (client: Client) => {
 		const dialog = document.getElementById(
 			"edit-client-dialog"
@@ -47,7 +50,7 @@
 				<td>{client.address == null ? "Sin Direccion" : client.address}</td>
 				<td>
 					<button class="btn-edit" on:click={() => openEditDialog(client)}>
-						<box-icon name="edit" color="currentColor"></box-icon>
+						{@html EditIcon}
 					</button>
 					<button
 						class="btn-delete"
@@ -57,7 +60,7 @@
 							}
 						}}
 					>
-						<box-icon name="trash" color="currentColor"></box-icon>
+						{@html TrashIcon}
 					</button>
 				</td>
 			</tr>

@@ -4,6 +4,9 @@
 	import { deleteProductService } from "@/services/products";
 	import type { Product } from "@/types";
 
+	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
+	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
+
 	export let products: Product[] = [];
 	export let filterClickEvent: (e: MouseEvent) => void;
 	const openEditDialog = (product: Product) => {
@@ -54,7 +57,7 @@
 				<td>#{parseId(product.id)}</td>
 				<td>
 					<button class="btn-edit" on:click={() => openEditDialog(product)}>
-						<box-icon name="edit" color="currentColor"></box-icon>
+						{@html EditIcon}
 					</button>
 
 					<button
@@ -65,7 +68,7 @@
 							}
 						}}
 					>
-						<box-icon name="trash" color="currentColor"></box-icon>
+						{@html TrashIcon}
 					</button>
 				</td>
 			</tr>
@@ -141,35 +144,6 @@
 	.btn-delete {
 		background-color: var(--danger75);
 		color: white;
-	}
-
-	/* Laoder */
-
-	.load {
-		text-align: center;
-		font-style: italic;
-		font-weight: bold;
-	}
-
-	.load::after {
-		content: "Cargando...";
-		animation: ellipsis 2s infinite;
-		transition: all 0.3s ease-in-out;
-	}
-
-	@keyframes ellipsis {
-		0% {
-			content: "Cargando";
-		}
-		33% {
-			content: "Cargando.";
-		}
-		66% {
-			content: "Cargando..";
-		}
-		100% {
-			content: "Cargando...";
-		}
 	}
 
 	:global(th.active) {

@@ -48,3 +48,7 @@ li,
 ol {
 	list-style: none;
 }
+
+svg {
+	fill: currentColor;
+}

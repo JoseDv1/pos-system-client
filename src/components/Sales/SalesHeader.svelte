@@ -11,6 +11,7 @@
 		pendingSalesCountByClient,
 	} from "@/services/sales";
 	import { clients } from "@/services/clients";
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
 </script>
 
 <header>
@@ -39,7 +40,7 @@
 					await createSaleService($clientsFilter);
 				}}
 			>
-				<box-icon name="plus" color="currentColor"></box-icon>
+				{@html PlusIcon}
 				Agregar
 			</button>
 		</div>
