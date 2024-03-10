@@ -56,6 +56,16 @@ export const pendingSalesCountByClient = derived([filteredSales], ([$filteredSal
 	return total;
 });
 
+export const pendingSalesAmount = derived([filteredSaleByDate], ([$filteredSaleByDate]) => {
+	const total = $filteredSaleByDate.filter((sale) => sale.status === "PENDING").reduce((acc, sale) => acc + sale.totalCost, 0);
+	return total;
+});
+
+export const pendingSalesAmountByClient = derived([filteredSales], ([$filteredSales]) => {
+	const total = $filteredSales.filter((sale) => sale.status === "PENDING").reduce((acc, sale) => acc + sale.totalCost, 0);
+	return total;
+});
+
 
 // Services
 export const fetchSalesService = (async () => {

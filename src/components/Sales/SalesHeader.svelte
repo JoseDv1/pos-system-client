@@ -3,12 +3,12 @@
 		createSaleService,
 		searchDate,
 		clientsFilter,
-		totalSalesCount,
 		totalSalesAmount,
 		pendingSalesCount,
-		totalClientSalesCount,
 		totalClientSalesAmount,
 		pendingSalesCountByClient,
+		pendingSalesAmount,
+		pendingSalesAmountByClient,
 	} from "@/services/sales";
 	import { clients } from "@/services/clients";
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
@@ -48,8 +48,11 @@
 	<footer>
 		<div>
 			<p>
-				<b>Conteo Dia: </b>
-				{$totalSalesCount < 100 ? `00${$totalSalesCount}` : $totalSalesCount}
+				<b>Pendiente:</b>
+				{new Intl.NumberFormat("es-CO", {
+					style: "currency",
+					currency: "COP",
+				}).format($pendingSalesAmount)}
 			</p>
 			<p>
 				<b>Total Dia: </b>
@@ -61,7 +64,6 @@
 			<p><b>Pendientes: </b> {$pendingSalesCount}</p>
 		</div>
 		<div>
-			<p><b>Conteo Cliente: </b> {$totalClientSalesCount}</p>
 			<p>
 				<b>Total Cliente: </b>
 				{new Intl.NumberFormat("es-CO", {
@@ -70,6 +72,13 @@
 				}).format($totalClientSalesAmount)}
 			</p>
 			<p><b>Pendientes Cliente: </b> {$pendingSalesCountByClient}</p>
+			<p class="pending-amount">
+				<b>Total Pendientes Clientes: </b>
+				{new Intl.NumberFormat("es-CO", {
+					style: "currency",
+					currency: "COP",
+				}).format($pendingSalesAmountByClient)}
+			</p>
 		</div>
 	</footer>
 </header>
