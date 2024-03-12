@@ -9,9 +9,13 @@
 		pendingSalesCountByClient,
 		pendingSalesAmount,
 		pendingSalesAmountByClient,
+		markAllSalesAsPaidByClientService,
 	} from "@/services/sales";
 	import { clients } from "@/services/clients";
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
+
+	import paidIcon from "@/assets/svgs/bx-money-withdraw.svg?raw";
+	import { slide } from "svelte/transition";
 </script>
 
 <header>
@@ -33,17 +37,36 @@
 				{/each}
 			</select>
 		</search>
-		<div>
-			<button
-				class="btn-edit"
-				on:click={async () => {
-					await createSaleService($clientsFilter);
+		{#if $clientsFilter !== "" && $searchDate == new Date()
+					.toISOString()
+					.split("T")[0]}
+			<div
+				class="actions"
+				transition:slide={{
+					axis: "x",
 				}}
 			>
-				{@html PlusIcon}
-				Agregar
-			</button>
-		</div>
+				<button
+					class="btn-edit"
+					on:click={async () => {
+						await createSaleService($clientsFilter);
+					}}
+				>
+					{@html PlusIcon}
+					Agregar
+				</button>
+
+				<button
+					class="btn-success"
+					on:click={async () => {
+						await markAllSalesAsPaidByClientService($clientsFilter);
+					}}
+				>
+					{@html paidIcon}
+					Marcar todo como pagado</button
+				>
+			</div>
+		{/if}
 	</section>
 	<footer>
 		<div>
@@ -105,10 +128,16 @@
 		flex: 1;
 	}
 
-	header section button {
+	button {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+		font-weight: bold;
+	}
+
+	header section .actions {
+		display: flex;
+		gap: 1rem;
 	}
 
 	header section search {
@@ -129,6 +158,7 @@
 		background-color: var(--light);
 		border-radius: var(--radius);
 		border: 0;
+		flex-shrink: 0;
 	}
 
 	header section search select option {

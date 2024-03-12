@@ -25,7 +25,7 @@ export let search = writable('');
 export const fetchProductsService = (async () => {
 	try {
 		loading.set(true);
-		const res = await fetch(`${API_URL}/products?category=true`);
+		const res = await fetch(`${API_URL}/products`);
 		const data = await res.json();
 		products.set(data);
 		return data;

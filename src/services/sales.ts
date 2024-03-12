@@ -149,3 +149,27 @@ export const markSaleAsPaidService = async (id: string) => {
 		createToast("Error al marcar la venta como pagada", "error");
 	}
 }
+
+export const markAllSalesAsPaidByClientService = async (clientId: string) => {
+	try {
+		// Update the sales in the database
+		const response = await fetch(`${API_URL}/sales/paid/${clientId}`, {
+			method: "PUT",
+		});
+		const data = await response.json(); // This returns the count of updated sales not the updated sales
+
+		// Update state
+		sales.update((prevSales) => {
+			return prevSales.map((sale) => {
+				if (sale.clientId === clientId) {
+					return { ...sale, status: "PAYED" };
+				}
+				return sale;
+			});
+		});
+
+	}
+	catch (error) {
+		createToast("Error al marcar todas las ventas como pagadas", "error");
+	}
+}
