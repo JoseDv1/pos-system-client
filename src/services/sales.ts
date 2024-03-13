@@ -5,6 +5,7 @@ import { createToast } from "./utils";
 import type { Sale } from "@/types";
 
 
+// ---- STATES ----
 export const sales = writable<Sale[]>([]);
 export const clientsFilter = writable<string>("");
 export const searchDate = writable<string>(new Date().toISOString().split("T")[0]);
@@ -67,7 +68,7 @@ export const pendingSalesAmountByClient = derived([filteredSales], ([$filteredSa
 });
 
 
-// Services
+// ---- CRUD Operations ----
 export const fetchSalesService = (async () => {
 	try {
 		loading.set(true);
@@ -122,31 +123,45 @@ export const deleteSaleService = async (id: string) => {
 	}
 }
 
+
+// ---- Not CRUD Operations ----
 export const markSaleAsPaidService = async (id: string) => {
 	try {
-		const response = await fetch(`${API_URL}/sales/${id}`, {
+		const response = await fetch(`${API_URL}/sales/${id}/paid`, {
 			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				status: "PAYED",
-			}),
 		});
 		const data = await response.json();
-
 		// Update state
 		sales.update((prevSales) => {
 			return prevSales.map((sale) => {
-				if (sale.id === id) {
+				if (sale.id === data.id) {
 					return { ...sale, status: "PAYED" };
 				}
 				return sale;
 			});
 		});
-		return data;
 	} catch (error) {
 		createToast("Error al marcar la venta como pagada", "error");
+	}
+}
+
+export const markSaleAsPendingService = async (id: string) => {
+	try {
+		const response = await fetch(`${API_URL}/sales/${id}/pending`, {
+			method: "PUT",
+		});
+		const data = await response.json();
+		// Update state
+		sales.update((prevSales) => {
+			return prevSales.map((sale) => {
+				if (sale.id === data.id) {
+					return { ...sale, status: "PENDING" };
+				}
+				return sale;
+			});
+		});
+	} catch (error) {
+		createToast("Error al marcar la venta como pendiente", "error");
 	}
 }
 

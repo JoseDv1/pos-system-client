@@ -4,6 +4,7 @@
 		deleteSaleService,
 		filteredSales,
 		markSaleAsPaidService,
+		markSaleAsPendingService,
 	} from "@/services/sales";
 	import { loading } from "@/services/stores";
 	import { fetchProductsOnSale, printSale } from "@/services/productsOnSale";
@@ -41,11 +42,11 @@
 				<td>#{parseId(sale?.id)}</td>
 				<td>{parseIsoDate(sale?.createdAt)}</td>
 				<td>{sale?.client?.name}</td>
-				<td
-					><span class={sale?.status == "PENDING" ? "pending" : "pay"}
+				<td>
+					<span class={sale?.status == "PENDING" ? "pending" : "pay"}
 						>{sale?.status == "PENDING" ? "Pendiente" : "Pagado"}</span
-					></td
-				>
+					>
+				</td>
 				<td
 					>{new Intl.NumberFormat("es-CO", {
 						style: "currency",
@@ -56,16 +57,12 @@
 					<button
 						class="btn-delete"
 						on:click={() => {
-							if (confirm("¿Estás seguro de eliminar esta venta?")) {
-								if (confirm("¿Estás muy seguro?")) {
-									if (
-										confirm(
-											"Elimiar la venta hara que se borre del historial y no se pueda recuperar nunca si tiene elemento adentro no se eliminara aun asi"
-										)
-									) {
-										deleteSaleService(sale.id);
-									}
-								}
+							if (
+								confirm(
+									"Elimiar la venta hara que se borre del historial y no se pueda recuperar nunca si tiene elemento adentro no se eliminara aun asi"
+								)
+							) {
+								deleteSaleService(sale.id);
 							}
 						}}
 					>
@@ -82,10 +79,12 @@
 						{@html PrinterIcon}
 					</button>
 					<button
-						class="btn-success"
+						class={sale?.status == "PENDING" ? "btn-success" : "btn-delete"}
 						on:click={() => {
-							if (confirm("¿Estás seguro de marcar esta venta como pagada?")) {
+							if (sale?.status == "PENDING") {
 								markSaleAsPaidService(sale.id);
+							} else {
+								markSaleAsPendingService(sale.id);
 							}
 						}}
 					>
@@ -159,5 +158,9 @@
 
 	td[colspan="6"] {
 		text-align: center;
+	}
+
+	button {
+		transition: all 0.3s;
 	}
 </style>

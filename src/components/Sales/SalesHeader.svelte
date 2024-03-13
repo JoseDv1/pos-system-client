@@ -10,6 +10,7 @@
 		pendingSalesAmount,
 		pendingSalesAmountByClient,
 		markAllSalesAsPaidByClientService,
+		filteredSales,
 	} from "@/services/sales";
 	import { clients } from "@/services/clients";
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
@@ -56,15 +57,20 @@
 					Agregar
 				</button>
 
-				<button
-					class="btn-success"
-					on:click={async () => {
-						await markAllSalesAsPaidByClientService($clientsFilter);
-					}}
-				>
-					{@html paidIcon}
-					Marcar todo como pagado</button
-				>
+				{#if $filteredSales.length > 0}
+					<button
+						class="btn-success"
+						transition:slide={{
+							axis: "x",
+						}}
+						on:click={async () => {
+							await markAllSalesAsPaidByClientService($clientsFilter);
+						}}
+					>
+						{@html paidIcon}
+						Marcar todo como pagado</button
+					>
+				{/if}
 			</div>
 		{/if}
 	</section>
@@ -167,14 +173,13 @@
 
 	header footer {
 		display: flex;
-		gap: 1rem;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
 	header footer div {
 		display: flex;
-		gap: 0.5rem;
-		flex: 1;
-		justify-content: space-around;
+		gap: 1rem;
 	}
 </style>
