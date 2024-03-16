@@ -3,3 +3,9 @@ dist
 .git
 .gitignore
 *.md
+node_modules
+Dockerfile*
+docker-compose*
+.dockerignore
+README.md
+.vscode
