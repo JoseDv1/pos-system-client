@@ -69,7 +69,7 @@
 		flex-direction: column;
 		align-items: space-between;
 		justify-content: center;
-		background-color: white;
+		background-color: var(--color);
 		padding: 1rem;
 		border-radius: var(--radius);
 		gap: 0.5rem;

@@ -29,7 +29,7 @@
 	}
 
 	article {
-		background-color: white;
+		background-color: var(--color);
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;

@@ -10,6 +10,7 @@
 	import Package from "@/assets/svgs/bx-package.svg?raw";
 	import Car from "@/assets/svgs/bx-car.svg?raw";
 	import Group from "@/assets/svgs/bx-group.svg?raw";
+	import Gear from "@/assets/svgs/bx-cog.svg?raw";
 
 	let currentUrl = "";
 	onMount(() => {
@@ -68,6 +69,12 @@
 		icon={Group}
 		label="Meseros"
 		className={currentUrl === "/dashboard/waiters" ? "current-page" : ""}
+	/>
+	<NavbarIcon
+		href="/dashboard/settings"
+		icon={Gear}
+		label="Configuración"
+		className={currentUrl === "/dashboard/settings" ? "current-page" : ""}
 	/>
 </ul>
 

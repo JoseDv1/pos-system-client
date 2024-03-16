@@ -23,7 +23,7 @@
 
 <style>
 	article {
-		background-color: white;
+		background-color: var(--color);
 		padding: 1rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
@@ -41,6 +41,6 @@
 	input[type="date"] {
 		padding: 0.5rem;
 		border-radius: var(--radius);
-		border: 1px solid var(--light75);
+		border: 1px solid var(--accent);
 	}
 </style>

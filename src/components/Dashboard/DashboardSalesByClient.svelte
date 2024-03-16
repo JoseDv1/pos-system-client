@@ -37,7 +37,7 @@
 
 <style>
 	article {
-		background-color: white;
+		background-color: var(--color);
 		padding: 1rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;

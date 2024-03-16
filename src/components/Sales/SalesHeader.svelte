@@ -41,6 +41,20 @@
 		{#if $clientsFilter !== "" && $searchDate == new Date()
 					.toISOString()
 					.split("T")[0]}
+			{#if $filteredSales.length > 0}
+				<button
+					class="btn-success"
+					transition:slide={{
+						axis: "x",
+					}}
+					on:click={async () => {
+						await markAllSalesAsPaidByClientService($clientsFilter);
+					}}
+				>
+					{@html paidIcon}
+					Marcar todo como pagado</button
+				>
+			{/if}
 			<div
 				class="actions"
 				transition:slide={{
@@ -56,21 +70,6 @@
 					{@html PlusIcon}
 					Agregar
 				</button>
-
-				{#if $filteredSales.length > 0}
-					<button
-						class="btn-success"
-						transition:slide={{
-							axis: "x",
-						}}
-						on:click={async () => {
-							await markAllSalesAsPaidByClientService($clientsFilter);
-						}}
-					>
-						{@html paidIcon}
-						Marcar todo como pagado</button
-					>
-				{/if}
 			</div>
 		{/if}
 	</section>
@@ -116,7 +115,7 @@
 	header {
 		display: flex;
 		flex-direction: column;
-		background-color: white;
+		background-color: var(--color);
 		padding: 1rem;
 		border-radius: var(--radius);
 		gap: 1rem;
@@ -153,7 +152,7 @@
 
 	header section search input {
 		padding: 0.5rem;
-		background-color: var(--light);
+		background-color: var(--accent);
 		border-radius: var(--radius);
 		width: 100%;
 		border: 0;
@@ -161,7 +160,7 @@
 
 	header section search select {
 		padding: 0.5rem;
-		background-color: var(--light);
+		background-color: var(--accent);
 		border-radius: var(--radius);
 		border: 0;
 		flex-shrink: 0;

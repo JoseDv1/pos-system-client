@@ -73,7 +73,7 @@
 		align-items: center;
 		margin-bottom: 1rem;
 		padding: 1rem;
-		background-color: white;
+		background-color: var(--color);
 		border-radius: var(--radius);
 		gap: 1rem;
 	}
@@ -102,7 +102,7 @@
 		padding: 0.5rem 1rem;
 		border: none;
 		border-radius: var(--radius);
-		background-color: var(--light);
+		background-color: var(--accent);
 		font-size: 1.2rem;
 	}
 

@@ -103,7 +103,7 @@
 <style>
 	table {
 		width: 100%;
-		background-color: white;
+		background-color: var(--color);
 		border-radius: var(--radius);
 		padding: 1rem;
 		border-spacing: 0;
@@ -140,7 +140,7 @@
 	}
 
 	tr:nth-child(odd) {
-		background-color: var(--light);
+		background-color: var(--accent);
 		border-radius: 1rem;
 	}
 

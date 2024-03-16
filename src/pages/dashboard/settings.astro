@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ConfigPage from "@/components/Config/ConfigPage.svelte";
+---
+
+<Layout title="Configuración">
+	<ConfigPage client:only="svelte" />
+</Layout>
+
+<style>
+	main {
+		padding: 1rem 2rem;
+	}
+
+	header {
+		background-color: var(--color);
+		padding: 1rem;
+		border-radius: var(--radius);
+		margin-bottom: 2rem;
+	}
+
+	section {
+		background-color: var(--color);
+		padding: 1rem;
+		border-radius: var(--radius);
+		min-height: 200px;
+	}
+</style>

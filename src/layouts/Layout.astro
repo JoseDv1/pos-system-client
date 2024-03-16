@@ -33,5 +33,13 @@ const { title } = Astro.props;
 				margin-left: 6.5rem;
 			}
 		</style>
-	</body><!-- Sistema POS Desarrolado por JoseDv1 (Jose Villegas)  --><!-- Github: https://github.com/JoseDv1 --><!-- Web: https://josedv.com -->
+	</body>
+
+	<script>
+		window.localStorage.getItem("darkMode") === "true"
+			? document.documentElement.classList.add("dark")
+			: document.documentElement.classList.remove("dark");
+	</script>
+
+	<!-- Sistema POS Desarrolado por JoseDv1 (Jose Villegas)  --><!-- Github: https://github.com/JoseDv1 --><!-- Web: https://josedv.com -->
 </html>

@@ -51,7 +51,7 @@
 		align-items: center;
 		margin-bottom: 1rem;
 		padding: 1rem;
-		background-color: white;
+		background-color: var(--color);
 		border-radius: var(--radius);
 	}
 
