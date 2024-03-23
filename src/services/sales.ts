@@ -102,7 +102,7 @@ export const createSaleService = async (clientId: string) => {
 		});
 
 		// Navigate to the new sale
-		window.location.replace(`/dashboard/sales/${data.id}`);
+		window.location.href = `/dashboard/sales/${data.id}`;
 
 
 
