@@ -53,7 +53,11 @@
 				<td>{product.name}</td>
 				<td>${product.price}</td>
 				<td>{product.stock}</td>
-				<td>{product.category.name}</td>
+				{#if product.category}
+					<td>{product.category.name}</td>
+				{:else}
+					<td>Sin Categoria</td>
+				{/if}
 				<td>#{parseId(product.id)}</td>
 				<td>
 					<button class="btn-edit" on:click={() => openEditDialog(product)}>
