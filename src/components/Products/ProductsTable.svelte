@@ -9,6 +9,7 @@
 
 	export let products: Product[] = [];
 	export let filterClickEvent: (e: MouseEvent) => void;
+
 	const openEditDialog = (product: Product) => {
 		const $dialog: HTMLDialogElement = document.getElementById(
 			"edit-product-dialog"
@@ -23,7 +24,7 @@
 
 		$form["edit-product-name"].value = product.name;
 		$form["edit-product-price"].value = product.price;
-		$form["edit-product-category"].value = product.category.id;
+		$form["edit-product-category"].value = product?.category?.id;
 		$form["edit-product-stock"].value = product.stock;
 		$id.textContent = product.id;
 	};

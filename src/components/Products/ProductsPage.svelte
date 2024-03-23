@@ -27,8 +27,12 @@
 			Nombre: (a: Product, b: Product) => a.name.localeCompare(b.name),
 			Precio: (a: Product, b: Product) => a.price - b.price,
 			Stock: (a: Product, b: Product) => a.stock - b.stock,
-			Categoria: (a: Product, b: Product) =>
-				a.category.name.localeCompare(b.category.name),
+			Categoria: (a: Product, b: Product) => {
+				if (a.category && b.category) {
+					return a.category.name.localeCompare(b.category.name);
+				}
+				return 0;
+			},
 			Id: (a: Product, b: Product) => a.id.localeCompare(b.id),
 		};
 
