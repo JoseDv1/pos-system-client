@@ -4,11 +4,15 @@
 	import { markSaleAsPaidService } from "@/services/sales";
 
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
+	import { onMount } from "svelte";
 
 	function openAddProductOnSaleDialog() {
 		const dialog = document.getElementById("add-product-on-sale-dialog");
 		dialog.showModal();
 	}
+	onMount(() => {
+		openAddProductOnSaleDialog();
+	});
 </script>
 
 <header>

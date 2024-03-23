@@ -101,6 +101,11 @@ export const createSaleService = async (clientId: string) => {
 			return [data, ...prevSales];
 		});
 
+		// Navigate to the new sale
+		window.location.replace(`/dashboard/sales/${data.id}`);
+
+
+
 		return data;
 	} catch (error) {
 		createToast("Error al crear la venta", "error");

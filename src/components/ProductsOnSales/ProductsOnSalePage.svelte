@@ -1,7 +1,6 @@
 <script>
 	import ProductsOnSaleTable from "./ProductsOnSaleTable.svelte";
 	import ProductsOnSaleDialogs from "./ProductsOnSaleDialogs.svelte";
-	import { createToast } from "@/services/utils";
 	import { fetchProductsOnSale } from "@/services/productsOnSale";
 	import { onMount } from "svelte";
 	import ProductsOnSalesHeader from "./ProductsOnSalesHeader.svelte";
