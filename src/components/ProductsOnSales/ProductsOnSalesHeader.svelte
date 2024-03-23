@@ -12,6 +12,10 @@
 	}
 	onMount(() => {
 		openAddProductOnSaleDialog();
+		const dialog = document.getElementById("add-product-on-sale-dialog");
+
+		// Focus on the first input
+		dialog.querySelector("input").focus();
 	});
 </script>
 
