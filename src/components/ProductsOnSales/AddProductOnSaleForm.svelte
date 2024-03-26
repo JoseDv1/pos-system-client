@@ -18,7 +18,8 @@
 	async function addProductOnSaleEvent(e) {
 		const $form = e.target;
 		const formData = new FormData($form);
-		const productId = formData.get("productToAdd");
+		// Product ID
+		const productId = $form.querySelector("input[type=radio]:checked")?.value;
 		const quantity = formData.get("add-product-quantity");
 		const saleId = $productsOnSale.id;
 		await addProductOnSaleService(saleId, productId, { quantity });
@@ -51,8 +52,8 @@
 							<p>${product?.price}</p>
 							<input
 								type="radio"
-								name="productToAdd"
-								id="productToAdd"
+								name={product.name}
+								id={`id-${product.id}`}
 								value={product?.id}
 								autocomplete="off"
 							/>
