@@ -23,6 +23,9 @@
 		const quantity = formData.get("add-product-quantity");
 		const saleId = $productsOnSale.id;
 		await addProductOnSaleService(saleId, productId, { quantity });
+
+		// Focus Again on the search input
+		$form.querySelector("input[type=text]").focus();
 	}
 </script>
 
@@ -53,7 +56,6 @@
 							<input
 								type="radio"
 								name={product.name}
-								id={`id-${product.id}`}
 								value={product?.id}
 								autocomplete="off"
 							/>
