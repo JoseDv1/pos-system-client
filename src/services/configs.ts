@@ -1,9 +1,9 @@
 import { writable } from "svelte/store";
 
 
-export const darkMode = writable<Boolean>(localStorage.getItem('darkMode') === 'true' || false);
+export const darkMode = writable<Boolean>(window.localStorage.getItem('darkMode') === 'true' || false);
 darkMode.subscribe((value) => {
-	localStorage.setItem('darkMode', value.toString());
+	window.localStorage.setItem('darkMode', value.toString());
 
 	if (value) {
 		document.documentElement.classList.add('dark');
@@ -12,6 +12,10 @@ darkMode.subscribe((value) => {
 	}
 });
 
+export const fastSale = writable<Boolean>(window.localStorage.getItem('fastSale') === 'true' || false);
+fastSale.subscribe((value) => {
+	window.localStorage.setItem('fastSale', value.toString());
+});
 
 
 

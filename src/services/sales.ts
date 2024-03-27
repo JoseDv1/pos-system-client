@@ -1,9 +1,9 @@
 import { API_URL } from "./constants";
-import { derived, writable } from "svelte/store";
+import { derived, get, writable } from "svelte/store";
 import { loading } from "./stores";
 import { createToast } from "./utils";
 import type { Sale } from "@/types";
-
+import { fastSale } from "./configs";
 
 // ---- STATES ----
 export const sales = writable<Sale[]>([]);
@@ -101,8 +101,12 @@ export const createSaleService = async (clientId: string) => {
 			return [data, ...prevSales];
 		});
 
-		// Navigate to the new sale
-		window.location.href = `/dashboard/sales/${data.id}`;
+		// Navigate to the new sale if fastSale is enabled
+
+		console.log(get(fastSale));
+		if (get(fastSale)) {
+			window.location.href = `/dashboard/sales/${data.id}`;
+		}
 
 
 

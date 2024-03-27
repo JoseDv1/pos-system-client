@@ -1,11 +1,16 @@
 <script>
-	import { darkMode } from "@/services/configs";
+	import { darkMode, fastSale } from "@/services/configs";
 </script>
 
 <section>
 	<label>
 		Modo Oscuro:
 		<input type="checkbox" bind:checked={$darkMode} />
+	</label>
+
+	<label>
+		Venta Rapida:
+		<input type="checkbox" bind:checked={$fastSale} />
 	</label>
 </section>
 

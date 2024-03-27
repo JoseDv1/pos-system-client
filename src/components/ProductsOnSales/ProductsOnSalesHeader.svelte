@@ -2,6 +2,7 @@
 	import { parseId, parseIsoDate } from "@/services/utils";
 	import { productsOnSale, printSale } from "@/services/productsOnSale";
 	import { markSaleAsPaidService } from "@/services/sales";
+	import { fastSale } from "@/services/configs.ts";
 
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
 	import { onMount } from "svelte";
@@ -10,12 +11,15 @@
 		const dialog = document.getElementById("add-product-on-sale-dialog");
 		dialog.showModal();
 	}
-	onMount(() => {
-		openAddProductOnSaleDialog();
-		const dialog = document.getElementById("add-product-on-sale-dialog");
 
-		// Focus on the first input
-		dialog.querySelector("input").focus();
+	onMount(() => {
+		if ($fastSale) {
+			openAddProductOnSaleDialog();
+			const dialog = document.getElementById("add-product-on-sale-dialog");
+
+			// Focus on the first input
+			dialog.querySelector("input").focus();
+		}
 	});
 </script>
 
