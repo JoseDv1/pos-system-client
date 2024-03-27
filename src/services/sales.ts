@@ -4,6 +4,7 @@ import { loading } from "./stores";
 import { createToast } from "./utils";
 import type { Sale } from "@/types";
 import { fastSale } from "./configs";
+import { Chart } from "chart.js/auto";
 
 // ---- STATES ----
 export const sales = writable<Sale[]>([]);
@@ -65,6 +66,61 @@ export const pendingSalesAmount = derived([filteredSaleByDate], ([$filteredSaleB
 export const pendingSalesAmountByClient = derived([filteredSales], ([$filteredSales]) => {
 	const total = $filteredSales.filter((sale) => sale.status === "PENDING").reduce((acc, sale) => acc + sale.totalCost, 0);
 	return total;
+});
+
+// ---- Dashboard Stats ----
+export const lastfiveDaysSales = derived([sales], ([$sales]) => {
+	const today = new Date();
+	const lastFiveDays = Array.from({ length: 5 }, (_, index) => {
+		const date = new Date(today);
+		date.setDate(date.getDate() - index);
+		return date.toISOString().split("T")[0];
+	});
+
+	const sales = lastFiveDays.map((date) => {
+		const total = $sales
+			.filter((sale) => sale.createdAt.split("T")[0] === date)
+			.reduce((acc, sale) => acc + sale.totalCost, 0);
+		return { date, total };
+	});
+
+	const canvas = document.getElementById("salesChart") as HTMLCanvasElement;
+	if (canvas) {
+		const ctx = canvas.getContext("2d");
+		const labels = sales.map((sale) => sale.date).reverse();
+		const data = sales.map((sale) => sale.total).reverse();
+		if (ctx) {
+
+
+
+			const chart = new Chart(ctx, {
+				type: "bar",
+				data: {
+					labels,
+					datasets: [
+						{
+							label: "Ventas",
+							data,
+						},
+					],
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: true,
+					scales: {
+						y: {
+							beginAtZero: true,
+						},
+					},
+				},
+			});
+
+		}
+	}
+
+
+	return sales;
+
 });
 
 

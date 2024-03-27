@@ -3,7 +3,10 @@
 		totalSalesCount,
 		totalSalesAmount,
 		searchDate,
+		lastfiveDaysSales,
 	} from "@/services/sales";
+
+	$: console.log($lastfiveDaysSales);
 </script>
 
 <article>
@@ -19,6 +22,10 @@
 			currency: "COP",
 		}).format($totalSalesAmount)}
 	</p>
+
+	<section>
+		<canvas id="salesChart"></canvas>
+	</section>
 </article>
 
 <style>
@@ -42,5 +49,9 @@
 		padding: 0.5rem;
 		border-radius: var(--radius);
 		border: 1px solid var(--accent);
+	}
+
+	section {
+		width: 100%;
 	}
 </style>

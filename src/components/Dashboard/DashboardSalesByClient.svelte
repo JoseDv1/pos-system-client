@@ -58,5 +58,6 @@
 	td {
 		padding-inline: 1rem;
 		border: 1px solid black;
+		padding: 0.5rem;
 	}
 </style>
