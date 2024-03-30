@@ -21,9 +21,9 @@ export const fetchProductsOnSale = async (id: string) => {
 	}
 };
 
-export const addProductOnSaleService = async (saleId: string, productId: string, data: Partial<SaleProduct>) => {
+export const addProductOnSaleService = async (saleId: string, productId: string, data: Pick<Partial<SaleProduct>, "quantity">) => {
 	try {
-		const { quantity } = data;
+		const quantity = Number(data.quantity)
 		const response = await fetch(`${API_URL}/sales/${saleId}/products`, {
 			method: "POST",
 			headers: {
@@ -48,9 +48,11 @@ export const addProductOnSaleService = async (saleId: string, productId: string,
 	}
 }
 
-export const updateProductOnSaleService = async (saleId: string, productId: string, data: Partial<SaleProduct>) => {
+export const updateProductOnSaleService = async (saleId: string, productId: string, data: Pick<Partial<SaleProduct>, "unitCost" | "quantity">) => {
 	try {
-		const { quantity, unitCost } = data;
+		const quantity = Number(data.quantity);
+		const unitCost = Number(data.unitCost);
+
 		const response = await fetch(`${API_URL}/sales/${saleId}/products/${productId}`, {
 			method: "PUT",
 			headers: {
@@ -106,6 +108,8 @@ export const deleteProductOnSaleService = async (saleId: string, productId: stri
 	}
 }
 
+
+// ---- Not CRUD 
 export const printSale = (data: Sale) => {
 	const date = new Date(data.createdAt);
 	const formatDate = new Intl.DateTimeFormat("es-CO", {
