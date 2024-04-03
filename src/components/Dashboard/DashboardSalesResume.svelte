@@ -6,7 +6,7 @@
 		lastfiveDaysSales,
 	} from "@/services/sales";
 
-	$: console.log($lastfiveDaysSales);
+	$lastfiveDaysSales;
 </script>
 
 <article>
