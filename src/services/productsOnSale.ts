@@ -109,7 +109,7 @@ export const deleteProductOnSaleService = async (saleId: string, productId: stri
 }
 
 
-// ---- Not CRUD 
+// ---- Not CRUD ----
 export const printSale = (data: Sale) => {
 	const date = new Date(data.createdAt);
 	const formatDate = new Intl.DateTimeFormat("es-CO", {
@@ -209,4 +209,33 @@ export const printSale = (data: Sale) => {
 	printWindow?.document.close();
 	printWindow?.print();
 
+}
+
+export const addOne = async (saleId: string, productId: string) => {
+	try {
+		const response = await fetch(`${API_URL}/sales/${saleId}/products/${productId}/addOne`, {
+			method: "PATCH",
+		});
+		const updatedProduct = await response.json();
+
+		// Update the products on sale
+		productsOnSale.update((prevSale) => {
+			return {
+				...prevSale,
+				saleProducts: prevSale.saleProducts!.map((product) => {
+					if (product.productId === updatedProduct.productId) {
+						return updatedProduct;
+					}
+					return product;
+				}),
+			}
+		});
+
+		return updatedProduct;
+	} catch (error) {
+		createToast("Fallo al agregar uno al producto en la venta", "error");
+	} finally {
+		// Update the products on sale
+		fetchProductsOnSale(saleId);
+	}
 }

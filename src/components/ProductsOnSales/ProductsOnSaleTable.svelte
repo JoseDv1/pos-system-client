@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		addOne,
 		deleteProductOnSaleService,
 		productsOnSale,
 	} from "@/services/productsOnSale";
@@ -65,6 +66,14 @@
 					}).format(saleProduct?.quantity * saleProduct?.unitCost)}</td
 				>
 				<td>
+					<button
+						class="btn-success"
+						on:click={() => {
+							addOne(saleProduct.saleId, saleProduct.productId);
+						}}
+					>
+						{@html EditIcon}
+					</button>
 					<button
 						class="btn-edit"
 						on:click={() => {
