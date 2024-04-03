@@ -159,7 +159,6 @@ export const createSaleService = async (clientId: string) => {
 
 		// Navigate to the new sale if fastSale is enabled
 
-		console.log(get(fastSale));
 		if (get(fastSale)) {
 			window.location.href = `/dashboard/sales/${data.id}`;
 		}
@@ -252,4 +251,12 @@ export const markAllSalesAsPaidByClientService = async (clientId: string) => {
 	catch (error) {
 		createToast("Error al marcar todas las ventas como pagadas", "error");
 	}
+}
+
+export const generateReportByDateService = async (from: string, to: string) => {
+	const response = await fetch(
+		`http://localhost:3000/api/sales/report?from=${from}&to=${to}`
+	);
+	const data = await response.json();
+	// TODO: Implement the report generation
 }
