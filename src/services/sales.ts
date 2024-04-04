@@ -158,7 +158,6 @@ export const createSaleService = async (clientId: string) => {
 		});
 
 		// Navigate to the new sale if fastSale is enabled
-
 		if (get(fastSale)) {
 			window.location.href = `/dashboard/sales/${data.id}`;
 		}
@@ -258,5 +257,125 @@ export const generateReportByDateService = async (from: string, to: string) => {
 		`http://localhost:3000/api/sales/report?from=${from}&to=${to}`
 	);
 	const data = await response.json();
-	// TODO: Implement the report generation
+
+	// Create a new window with the report
+	const reportWindow = window.open("", "_blank");
+	const dateFormater = new Intl.DateTimeFormat("es-CO", {
+		timeZone: "UTC",
+		day: "2-digit",
+		month: "long",
+		year: "numeric",
+
+	});
+	const moneyFormater = new Intl.NumberFormat("es-CO", {
+		style: "currency",
+		currency: "COP",
+	});
+
+	const total = moneyFormater.format(data.reduce((acc: any, sale: { totalCost: any; }) => acc + sale.totalCost, 0));
+
+
+	const salesByDay = Object.groupBy(data, (sale: any) => sale.createdAt.split("T")[0]);
+
+	const items = Object.entries(salesByDay).map(([date, sales]: any) => {
+		const total = moneyFormater.format(sales.reduce((acc: any, sale: { totalCost: any; }) => acc + sale.totalCost, 0));
+		return {
+			date, total
+		}
+	});
+
+	const sortedItems = items.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+	const itemsToShow = sortedItems.map((item) => {
+		return `
+			<tr>
+				<td>${dateFormater.format(new Date(item.date))}</td>
+				<td>${item.total}</td>
+			</tr>
+		`
+	});
+
+	const reportContent = ` 
+	<!DOCTYPE html>
+	<html lang="es">
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<title>Reporte de ventas</title>
+			<style>
+				@page {
+					size: 80mm 297mm;
+					margin: 0;
+				}
+
+				:root {
+					color-scheme: light;
+
+				}
+	
+				* {
+					margin: 0;
+					padding: 0;
+					box-sizing: border-box;
+					position: relative;
+					font-family: system-ui, sans-serif;
+				}
+	
+				body {
+					max-width: 80mm;
+					padding: 0.5rem;
+				}
+
+				header {
+					margin-bottom: 1rem;
+				}
+
+				table {
+					width: 100%;
+					border-collapse: collapse;
+				}
+
+				th, td {
+					text-align: left;
+				}
+
+				th {
+					padding: 8px;
+				}
+			</style>
+		</head>
+		<body>
+			<header>
+				<h1>Reporte de ventas</h1>
+				<p>Periodo: ${dateFormater.format(new Date(from))} - ${dateFormater.format(new Date(to))}</p>
+				<p>Total de ventas: ${total}</p>
+			</header>
+	
+			<main>
+				<section>
+					<h2>Ingresos Diarios</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Fecha</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							${itemsToShow.join("")}
+						</tbody>
+					</table>
+				</section>
+	
+			
+			</main>
+		</body>
+	</html>
+	`
+
+	reportWindow?.document.open();
+	reportWindow?.document.write(reportContent);
+	// Print the report
+	reportWindow?.print();
+	reportWindow?.document.close();
 }

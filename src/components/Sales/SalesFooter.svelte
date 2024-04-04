@@ -24,4 +24,14 @@
 		width: 100%;
 		bottom: 0;
 	}
+
+	button {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background-color: var(--primary);
+		color: var(--white);
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+	}
 </style>

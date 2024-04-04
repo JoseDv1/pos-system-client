@@ -1,15 +1,21 @@
 <script>
 	import { generateReportByDateService } from "@/services/sales";
+	import { onMount } from "svelte";
 
 	function closeGenerateReportDialog() {
 		document.getElementById("generateReportDialog").close();
 	}
 
 	async function generateReport() {
-		const startDate = document.getElementById("startDate").value;
-		const endDate = document.getElementById("endDate").value;
 		generateReportByDateService(startDate, endDate);
 	}
+
+	// Start date in the first day of the current month
+	let startDate = new Date().toISOString().split("T")[0];
+	startDate = startDate.slice(0, startDate.length - 2) + "01";
+
+	// End date in the current date
+	let endDate = new Date().toISOString().split("T")[0];
 </script>
 
 <dialog id="generateReportDialog">
@@ -29,10 +35,22 @@
 			}}
 		>
 			<label for="startDate">Fecha de Inicio</label>
-			<input type="date" id="startDate" name="startDate" required />
+			<input
+				type="date"
+				id="startDate"
+				name="startDate"
+				required
+				bind:value={startDate}
+			/>
 
 			<label for="endDate">Fecha de Fin</label>
-			<input type="date" id="endDate" name="endDate" required />
+			<input
+				type="date"
+				id="endDate"
+				name="endDate"
+				required
+				bind:value={endDate}
+			/>
 
 			<button type="submit">Generar</button>
 		</form>
