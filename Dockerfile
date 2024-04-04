@@ -1,4 +1,4 @@
-FROM oven/bun as base
+FROM oven/bun:latest as base
 WORKDIR /usr/src/client
 
 

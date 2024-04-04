@@ -1,21 +1,21 @@
 {
-	"name": "pos-system-astro",
-	"type": "module",
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro check && astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/check": "^0.5.6",
-		"@astrojs/node": "^8.2.1",
-		"@astrojs/svelte": "^5.1.0",
-		"astro": "^4.4.5",
-		"chart.js": "^4.4.2",
-		"svelte": "^4.2.12",
-		"typescript": "^5.3.3"
-	}
+  "name": "pos-system-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.6",
+    "@astrojs/node": "^8.2.1",
+    "@astrojs/svelte": "^5.1.0",
+    "astro": "^4.4.5",
+    "chart.js": "^4.4.2",
+    "svelte": "^4.2.12",
+    "typescript": "^5.3.3"
+  }
 }
