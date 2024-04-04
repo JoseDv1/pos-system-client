@@ -20,9 +20,10 @@
 		gap: 1rem;
 		background-color: var(--accent);
 		padding: 1rem;
-		position: fixed;
-		width: 100%;
+		position: sticky;
 		bottom: 0;
+		align-items: center;
+		justify-content: flex-end;
 	}
 
 	button {
