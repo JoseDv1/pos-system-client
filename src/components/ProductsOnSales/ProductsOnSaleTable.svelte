@@ -9,6 +9,7 @@
 
 	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
 	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
+	import plusIcon from "@/assets/svgs/bx-plus.svg?raw";
 
 	const openEditProductOnSaleDialog = (productsOnSale: SaleProduct) => {
 		// Get the dialog element
@@ -72,7 +73,7 @@
 							addOne(saleProduct.saleId, saleProduct.productId);
 						}}
 					>
-						{@html EditIcon}
+						{@html plusIcon}
 					</button>
 					<button
 						class="btn-edit"
