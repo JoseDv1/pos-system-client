@@ -71,7 +71,7 @@ export const pendingSalesAmountByClient = derived([filteredSales], ([$filteredSa
 // ---- Dashboard Stats ----
 export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 	const today = new Date();
-	const lastFiveDays = Array.from({ length: 5 }, (_, index) => {
+	const lastFiveDays = Array.from({ length: 8 }, (_, index) => {
 		const date = new Date(today);
 		date.setDate(date.getDate() - index);
 		return date.toISOString().split("T")[0];
@@ -87,12 +87,21 @@ export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 	const canvas = document.getElementById("salesChart") as HTMLCanvasElement;
 	if (canvas) {
 		const ctx = canvas.getContext("2d");
-		const labels = sales.map((sale) => sale.date).reverse();
+		const labels = sales.map((sale) => sale.date).reverse().map((date) => {
+			const dateFormater = new Intl.DateTimeFormat("es-CO", {
+				timeZone: "UTC",
+				weekday: "long",
+			});
+			const formatedDate = dateFormater.format(new Date(date));
+			// Capitalize the first letter
+			return formatedDate.charAt(0).toUpperCase() + formatedDate.slice(1);
+		});
 		const data = sales.map((sale) => sale.total).reverse();
 		if (ctx) {
 
 
 
+			// Create the chart
 			const chart = new Chart(ctx, {
 				type: "bar",
 				data: {
