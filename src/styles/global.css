@@ -103,14 +103,7 @@ button {
 	color: white;
 }
 
-/* Esconder la scrollbar en los dialogos */
-dialog::-webkit-scrollbar {
-	display: none;
-	-ms-overflow-style: none;
-	/* IE and Edge */
-	scrollbar-width: none;
-	/* Firefox */
-}
+
 
 /* Estados de las Ventas */
 .pending {
