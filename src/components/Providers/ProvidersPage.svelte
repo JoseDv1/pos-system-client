@@ -14,9 +14,8 @@
 		<div>
 			<button
 				class="btn-edit"
-				on:click={() => {
-					document.getElementById("add-provider-dialog").showModal();
-				}}
+				popovertarget="add-provider-dialog"
+				popovertargetaction="show"
 			>
 				{@html PlusIcon}
 				Agregar</button
@@ -26,7 +25,7 @@
 
 	<ProvidersTable />
 
-	<dialog id="add-provider-dialog">
+	<dialog id="add-provider-dialog" popover="auto">
 		<AddProviderDialog />
 	</dialog>
 	<dialog id="edit-provider-dialog">

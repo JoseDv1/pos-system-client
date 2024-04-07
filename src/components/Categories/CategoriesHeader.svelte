@@ -1,17 +1,10 @@
 <script lang="ts">
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
-
-	const openCreateCategoryDialog = () => {
-		const $dialog = document.getElementById(
-			"add-category-dialog"
-		) as HTMLDialogElement;
-		$dialog!.showModal();
-	};
 </script>
 
 <header>
 	<h1>Categorias</h1>
-	<button on:click={() => openCreateCategoryDialog()}>
+	<button popovertarget="add-category-dialog" popovertargetaction="show">
 		{@html PlusIcon}
 		Añadir Categoria
 	</button>

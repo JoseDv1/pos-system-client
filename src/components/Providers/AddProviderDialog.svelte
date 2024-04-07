@@ -1,9 +1,6 @@
 <script>
 	import { addProviderService } from "@/services/providers";
 
-	const closeAddProviderDialog = () => {
-		document.getElementById("add-provider-dialog").close();
-	};
 	const addProviderEvent = async (e) => {
 		const $form = e.target;
 		const data = {
@@ -33,14 +30,9 @@
 </script>
 
 <div>
-	<span
-		class="close"
-		on:click={() => closeAddProviderDialog()}
-		on:keydown={(e) => e.key === "Escape" && closeAddProviderDialog()}
-		tabindex="0"
-		role="button"
-		aria-label="Close dialog">&times;</span
-	>
+	<button popovertarget="add-provider-dialog" popovertargetaction="close"
+		>&times;
+	</button>
 	<h1>Agregar Proveedor</h1>
 	<small class="required">Campos requeridos</small>
 	<form on:submit|preventDefault={addProviderEvent}>
@@ -119,19 +111,6 @@
 		border-radius: var(--radius);
 	}
 
-	span.close {
-		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
-		cursor: pointer;
-		z-index: 5;
-		font-size: 1.5rem;
-	}
-
-	span.close:hover {
-		color: red;
-	}
-
 	small.required::before,
 	form > label::before,
 	legend::before {
@@ -158,5 +137,20 @@
 		border: 1px solid #ccc;
 		border-radius: var(--radius);
 		margin-top: 1rem;
+	}
+
+	button[popovertargetaction="close"] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: transparent;
+		border: none;
+		font-size: 2rem;
+		cursor: pointer;
+		z-index: 5;
+
+		&:hover {
+			color: red;
+		}
 	}
 </style>

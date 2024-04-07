@@ -1,24 +1,13 @@
 <script lang="ts">
 	export let createCategoryEvent: (e: SubmitEvent) => void;
-
-	const closeCreateCategoryDialog = () => {
-		const $dialog = document.getElementById(
-			"add-category-dialog"
-		) as HTMLDialogElement;
-		$dialog.close();
-	};
 </script>
 
 <div>
+	<button popovertarget="add-category-dialog" popovertargetaction="hide"
+		>&times;</button
+	>
 	<h1>Crea una Categoria nueva</h1>
 	<small>Son campos requeridos</small>
-	<span
-		on:click={() => closeCreateCategoryDialog()}
-		on:keydown={(e) => e.key === "Escape" && closeCreateCategoryDialog()}
-		tabindex="0"
-		role="button"
-		aria-label="Close dialog">&times;</span
-	>
 	<form on:submit|preventDefault={createCategoryEvent}>
 		<label for="add-category-name">Nombre</label>
 		<input
@@ -77,19 +66,6 @@
 		font-size: 1rem;
 	}
 
-	span {
-		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
-		cursor: pointer;
-		z-index: 5;
-		font-size: 1.5rem;
-	}
-
-	span:hover {
-		color: red;
-	}
-
 	small::before,
 	label::before {
 		content: "* ";
@@ -105,5 +81,19 @@
 		cursor: pointer;
 		font-size: 1.2rem;
 		margin-top: 1rem;
+	}
+
+	button[popovertargetaction="hide"] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: transparent;
+		font-size: 2rem;
+		border: none;
+		cursor: pointer;
+
+		&:hover {
+			color: red;
+		}
 	}
 </style>

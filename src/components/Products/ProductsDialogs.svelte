@@ -7,7 +7,7 @@
 	<EditProductForm />
 </dialog>
 
-<dialog id="add-product-dialog">
+<dialog id="add-product-dialog" popover="auto">
 	<AddProductForm />
 </dialog>
 

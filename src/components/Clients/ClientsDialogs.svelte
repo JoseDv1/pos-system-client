@@ -42,20 +42,10 @@
 	};
 </script>
 
-<dialog id="add-client-dialog">
+<dialog id="add-client-dialog" popover="auto">
 	<div>
-		<span
-			class="close"
-			on:click={() =>
-				// @ts-ignore
-				document.getElementById("add-client-dialog").close()}
-			on:keydown={(e) =>
-				e.key === "Escape" &&
-				// @ts-ignore
-				document.getElementById("add-client-dialog").close()}
-			tabindex="0"
-			role="button"
-			aria-label="Close dialog">&times;</span
+		<button popovertarget="add-client-dialog" popovertargetaction="hide"
+			>&times;</button
 		>
 		<h1>Agregar un mesero</h1>
 		<small class="required">Son campos requeridos</small>
@@ -203,5 +193,20 @@
 		cursor: pointer;
 		font-size: 1.2rem;
 		margin-top: 1rem;
+	}
+
+	button[popovertargetaction="hide"] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: transparent;
+		border: none;
+		font-size: 2rem;
+		cursor: pointer;
+		z-index: 5;
+
+		&:hover {
+			color: red;
+		}
 	}
 </style>

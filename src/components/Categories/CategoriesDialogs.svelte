@@ -8,7 +8,7 @@
 	export let updateCategoryEvent;
 </script>
 
-<dialog id="add-category-dialog" class="add">
+<dialog popover id="add-category-dialog" class="add">
 	<AddCategoryForm {createCategoryEvent} />
 </dialog>
 

@@ -7,15 +7,10 @@
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
 	import { onMount } from "svelte";
 
-	function openAddProductOnSaleDialog() {
-		const dialog = document.getElementById("add-product-on-sale-dialog");
-		dialog.showModal();
-	}
-
 	onMount(() => {
 		if ($fastSale) {
-			openAddProductOnSaleDialog();
 			const dialog = document.getElementById("add-product-on-sale-dialog");
+			dialog.showPopover();
 
 			// Focus on the first input
 			dialog.querySelector("input").focus();
@@ -52,7 +47,11 @@
 				<box-icon name="printer" color="currentColor"></box-icon>
 				Imprimir</button
 			>
-			<button class="btn-edit" on:click={() => openAddProductOnSaleDialog()}>
+			<button
+				class="btn-edit"
+				popovertarget="add-product-on-sale-dialog"
+				popovertargetaction="show"
+			>
 				{@html PlusIcon}
 				Agregar Productos</button
 			>

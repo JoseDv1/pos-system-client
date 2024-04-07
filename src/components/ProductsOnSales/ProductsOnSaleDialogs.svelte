@@ -3,7 +3,7 @@
 	import EditProductOnsaleForm from "./EditProductOnsaleForm.svelte";
 </script>
 
-<dialog id="add-product-on-sale-dialog">
+<dialog id="add-product-on-sale-dialog" popover="auto">
 	<AddProductOnSaleForm />
 </dialog>
 <dialog id="edit-product-on-sale-dialog">

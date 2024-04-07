@@ -10,11 +10,6 @@
 		product.name.toLowerCase().includes(search.toLowerCase())
 	);
 
-	function closeAddProductOnSaleDialog() {
-		const dialog = document.getElementById("add-product-on-sale-dialog");
-		dialog.close();
-	}
-
 	async function addProductOnSaleEvent(e) {
 		const $form = e.target;
 		const formData = new FormData($form);
@@ -35,12 +30,8 @@
 
 <div>
 	<h1>Añade un producto</h1>
-	<span
-		on:click={() => closeAddProductOnSaleDialog()}
-		on:keydown={(e) => e.key === "Escape" && closeAddProductOnSaleDialog()}
-		tabindex="0"
-		role="button"
-		aria-label="Close dialog">&times;</span
+	<button popovertarget="add-product-on-sale-dialog" popovertargetaction="hide"
+		>&times;</button
 	>
 	<form on:submit|preventDefault={addProductOnSaleEvent}>
 		<search>
@@ -157,19 +148,6 @@
 		margin-top: 0.5rem;
 		display: block;
 		width: 100%;
-	}
-
-	span {
-		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
-		cursor: pointer;
-		z-index: 5;
-		font-size: 1.5rem;
-	}
-
-	span:hover {
-		color: red;
 	}
 
 	form > button {

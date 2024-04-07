@@ -2,14 +2,6 @@
 	import { categories } from "@/services/categories";
 	import { addProductService } from "@/services/products";
 
-	const closeCreateDialog = () => {
-		const $dialog: HTMLDialogElement = document.getElementById(
-			"add-product-dialog"
-		) as HTMLDialogElement;
-
-		$dialog.close();
-	};
-
 	const addProductEvent = async (e: SubmitEvent) => {
 		// Get the form data
 		const $form: HTMLFormElement = e.target as HTMLFormElement;
@@ -25,22 +17,19 @@
 		$form.reset();
 
 		// Close the dialog
-		const $dialog: HTMLDialogElement = document.getElementById(
-			"add-product-dialog"
-		) as HTMLDialogElement;
+		(
+			document.getElementById("add-product-dialog") as HTMLDialogElement
+		).close();
 	};
 </script>
 
 <div>
 	<h1>Añade un producto</h1>
 	<small>Son campos requeridos</small>
-	<span
-		on:click={() => closeCreateDialog()}
-		on:keydown={(e) => e.key === "Escape" && closeCreateDialog()}
-		tabindex="0"
-		role="button"
-		aria-label="Close dialog">&times;</span
+	<button popovertargetaction="hide" popovertarget="add-product-dialog"
+		>&times;</button
 	>
+
 	<form on:submit|preventDefault={addProductEvent}>
 		<label for="add-product-name">Nombre</label>
 		<input

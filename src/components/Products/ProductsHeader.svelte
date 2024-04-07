@@ -11,13 +11,6 @@
 	export let filterByKey: (key: string) => void;
 	export let filterkey: string;
 	export let toggleOrder: () => void;
-	// Dialogs
-	const openCreateDialog = () => {
-		const $dialog: HTMLDialogElement = document.getElementById(
-			"add-product-dialog"
-		) as HTMLDialogElement;
-		$dialog!.showModal();
-	};
 </script>
 
 <header>
@@ -54,7 +47,7 @@
 			{/if}
 		</button>
 
-		<button on:click={openCreateDialog}>
+		<button popovertarget="add-product-dialog" popovertargetaction="show">
 			{@html PlusIcon}
 			Añadir Producto
 		</button>

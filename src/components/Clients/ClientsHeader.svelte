@@ -1,18 +1,15 @@
 <script lang="ts">
 	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
-
-	const openAddDialog = () => {
-		const dialog = document.getElementById(
-			"add-client-dialog"
-		) as HTMLDialogElement;
-		dialog.showModal();
-	};
 </script>
 
 <header>
 	<h1>Meseros</h1>
 
-	<button class="btn-edit" on:click={() => openAddDialog()}>
+	<button
+		class="btn-edit"
+		popovertarget="add-client-dialog"
+		popovertargetaction="show"
+	>
 		{@html PlusIcon}
 		Agregar
 	</button>
