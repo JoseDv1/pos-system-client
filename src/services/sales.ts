@@ -148,6 +148,16 @@ export const fetchSalesService = (async () => {
 	}
 })()
 
+export const fetchByidSaleService = async (id: string) => {
+	try {
+		const response = await fetch(`${API_URL}/sales/${id}`);
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		createToast("Error al consultar la venta", "error");
+	}
+}
+
 export const createSaleService = async (clientId: string) => {
 	try {
 
@@ -387,4 +397,30 @@ export const generateReportByDateService = async (from: string, to: string) => {
 	// Print the report
 	reportWindow?.print();
 	reportWindow?.document.close();
+}
+
+export const updateSaleNote = async (id: string, note: string) => {
+	const response = await fetch(`${API_URL}/sales/${id}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			note,
+		}),
+	});
+
+	const data = await response.json();
+
+	// Update state
+	sales.update((prevSales) => {
+		return prevSales.map((sale) => {
+			if (sale.id === data.id) {
+				return { ...sale, note: data.note };
+			}
+			return sale;
+		});
+	});
+
+	return data;
 }
