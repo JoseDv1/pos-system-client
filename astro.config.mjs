@@ -1,7 +1,8 @@
 import { defineConfig } from "astro/config";
 import svelte from "@astrojs/svelte";
-
 import node from "@astrojs/node";
+import { execSync } from "child_process";
+const appVersion = execSync("git rev-parse HEAD").toString().trim();
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,4 +11,9 @@ export default defineConfig({
 	adapter: node({
 		mode: "standalone",
 	}),
+	vite: {
+		define: {
+			__COMMIT_HASH__: JSON.stringify(appVersion),
+		},
+	},
 });
