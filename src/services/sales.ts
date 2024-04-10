@@ -291,25 +291,16 @@ export const generateReportByDateService = async (from: string, to: string) => {
 		currency: "COP",
 	});
 
-	const total = moneyFormater.format(data.reduce((acc: any, sale: { totalCost: any; }) => acc + sale.totalCost, 0));
+	const totalIncome = data.reduce((acc: number, sale: any) => acc + sale.total, 0);
 
-
-	const salesByDay = Object.groupBy(data, (sale: any) => sale.createdAt.split("T")[0]);
-
-	const items = Object.entries(salesByDay).map(([date, sales]: any) => {
-		const total = moneyFormater.format(sales.reduce((acc: any, sale: { totalCost: any; }) => acc + sale.totalCost, 0));
-		return {
-			date, total
-		}
-	});
-
-	const sortedItems = items.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-	const itemsToShow = sortedItems.map((item) => {
+	const itemsToShow = data.map(({ date, total }: {
+		date: string;
+		total: number;
+	}) => {
 		return `
 			<tr>
-				<td>${dateFormater.format(new Date(item.date))}</td>
-				<td>${item.total}</td>
+				<td>${dateFormater.format(new Date(date))}</td>
+				<td>${moneyFormater.format(total)}</td>
 			</tr>
 		`
 	});
@@ -367,7 +358,7 @@ export const generateReportByDateService = async (from: string, to: string) => {
 			<header>
 				<h1>Reporte de ventas</h1>
 				<p>Periodo: ${dateFormater.format(new Date(from))} - ${dateFormater.format(new Date(to))}</p>
-				<p>Total de ventas: ${total}</p>
+				<p>Total de ventas: ${moneyFormater.format(totalIncome)}</p>
 			</header>
 	
 			<main>
