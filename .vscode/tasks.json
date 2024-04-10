@@ -2,20 +2,12 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "RunOnStart",
+			"label": "Run - Client",
 			"type": "shell",
 			"command": "bun run dev",
 			"runOptions": {
 				"runOn": "folderOpen"
 			},
 		},
-		{
-			"label": "RunServerOnStart",
-			"type": "shell",
-			"command": "cd ../server && bun run dev",
-			"runOptions": {
-				"runOn": "folderOpen"
-			},
-		}
 	]
 }
