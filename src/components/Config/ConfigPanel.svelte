@@ -1,5 +1,6 @@
 <script>
 	import { darkMode, fastSale } from "@/services/configs";
+	import { API_URL } from "@/services/constants";
 
 	const getGHCommit = async () => {
 		const res = await fetch(
@@ -7,6 +8,18 @@
 		);
 		const data = await res.json();
 		return data[0].sha;
+	};
+	const getGHAPICommit = async () => {
+		const res = await fetch(
+			"https://api.github.com/repos/JoseDv1/pos-system-server/commits"
+		);
+		const data = await res.json();
+		return data[0].sha;
+	};
+	const getAPIversion = async () => {
+		const res = await fetch(`${API_URL}/version`);
+		const data = await res.text();
+		return data;
 	};
 </script>
 
@@ -22,16 +35,30 @@
 	</label>
 
 	<!-- svelte-ignore missing-declaration -->
-	<p class="version">
-		Aplication Version: {__COMMIT_HASH__.slice(0, 7)}
-		{#await getGHCommit() then commit}
-			{#if commit !== __COMMIT_HASH__}
-				(Update Available)
-			{:else}
-				(latest)
-			{/if}
-		{/await}
-	</p>
+	<article>
+		<p class="version">
+			Aplication Version: {__COMMIT_HASH__.slice(0, 7)}
+			{#await getGHCommit() then commit}
+				{#if commit !== __COMMIT_HASH__}
+					(Update Available)
+				{:else}
+					(latest)
+				{/if}
+			{/await}
+		</p>
+		<p class="version">
+			{#await getAPIversion() then version}
+				Server Version: {version.slice(0, 7)}
+				{#await getGHAPICommit() then commit}
+					{#if commit !== version}
+						(Update Available)
+					{:else}
+						(latest)
+					{/if}
+				{/await}
+			{/await}
+		</p>
+	</article>
 </section>
 
 <style>
@@ -50,7 +77,7 @@
 		gap: 1rem;
 	}
 
-	.version {
+	article {
 		font-size: 0.75rem;
 		color: var(--color-text);
 		position: absolute;
