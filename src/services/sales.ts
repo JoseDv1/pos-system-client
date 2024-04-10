@@ -6,7 +6,7 @@ import type { Sale } from "@/types";
 import { fastSale } from "./configs";
 import { Chart } from "chart.js/auto";
 
-// ---- STATES ----
+// #region States
 export const sales = writable<Sale[]>([]);
 export const clientsFilter = writable<string>("");
 export const searchDate = writable<string>(new Date().toISOString().split("T")[0]);
@@ -133,7 +133,7 @@ export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 });
 
 
-// ---- CRUD Operations ----
+// #region CRUD
 export const fetchSalesService = (async () => {
 	try {
 		loading.set(true);
@@ -206,7 +206,7 @@ export const deleteSaleService = async (id: string) => {
 }
 
 
-// ---- Not CRUD Operations ----
+// #region NCRUD 
 export const markSaleAsPaidService = async (id: string) => {
 	try {
 		const response = await fetch(`${API_URL}/sales/${id}/paid`, {
