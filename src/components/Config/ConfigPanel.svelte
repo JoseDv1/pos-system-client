@@ -6,6 +6,8 @@
 		const res = await fetch(
 			"https://api.github.com/repos/JoseDv1/pos-system-client/commits"
 		);
+
+		if (!res.ok) return "Error";
 		const data = await res.json();
 		return data[0].sha;
 	};
@@ -13,6 +15,9 @@
 		const res = await fetch(
 			"https://api.github.com/repos/JoseDv1/pos-system-server/commits"
 		);
+
+		if (!res.ok) return "Error";
+
 		const data = await res.json();
 		return data[0].sha;
 	};
@@ -39,7 +44,9 @@
 		<p class="version">
 			Aplication Version: {__COMMIT_HASH__.slice(0, 7)}
 			{#await getGHCommit() then commit}
-				{#if commit != __COMMIT_HASH__}
+				{#if commit == "Error"}
+					(403 Error)
+				{:else if commit != __COMMIT_HASH__}
 					(Update Available)
 				{:else}
 					(latest)
@@ -51,7 +58,9 @@
 				{@const slice = version.slice(0, 7)}
 				Server Version: {slice}
 				{#await getGHAPICommit() then commit}
-					{#if commit.slice(0, 7) != version.slice(0, 7)}
+					{#if commit == "Error"}
+						(403 Error)
+					{:else if commit.slice(0, 7) != slice}
 						(Update Available)
 					{:else}
 						(latest)
