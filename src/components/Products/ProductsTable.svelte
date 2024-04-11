@@ -26,6 +26,7 @@
 		$form["edit-product-price"].value = product.price;
 		$form["edit-product-category"].value = product?.category?.id;
 		$form["edit-product-stock"].value = product.stock;
+		$form["edit-product-raw"].checked = product.isRawMaterial;
 		$id.textContent = product.id;
 	};
 </script>

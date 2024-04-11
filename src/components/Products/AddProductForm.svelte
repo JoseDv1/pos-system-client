@@ -2,6 +2,10 @@
 	import { categories } from "@/services/categories";
 	import { addProductService } from "@/services/products";
 
+	let isRawMaterial = false;
+
+	$: console.log(isRawMaterial);
+
 	const addProductEvent = async (e: SubmitEvent) => {
 		// Get the form data
 		const $form: HTMLFormElement = e.target as HTMLFormElement;
@@ -11,7 +15,10 @@
 			name: formData.get("add-product-name") as string,
 			price: Number(formData.get("add-product-price") as string),
 			categoryId: formData.get("add-product-category") as string,
+			isRawMaterial: Boolean(isRawMaterial),
 		};
+
+		console.log(data);
 
 		addProductService(data);
 		$form.reset();
@@ -40,7 +47,14 @@
 			autocomplete="off"
 		/>
 
-		<label for="add-product-price">Precio (Venta)</label>
+		<label for="add-product-price"
+			>Precio
+			{#if isRawMaterial}
+				(Costo)
+			{:else}
+				(Venta)
+			{/if}
+		</label>
 		<input
 			type="number"
 			id="add-product-price"
@@ -58,6 +72,16 @@
 				<option value={category.id}>{category.name}</option>
 			{/each}
 		</select>
+
+		<label for="add-product-raw"
+			>¿Es Materia Prima?
+			<input
+				type="checkbox"
+				name="add-product-raw"
+				id="add-product-raw"
+				bind:checked={isRawMaterial}
+			/>
+		</label>
 
 		<button>Añadir</button>
 	</form>
@@ -90,19 +114,6 @@
 		border-radius: var(--radius);
 	}
 
-	span {
-		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
-		cursor: pointer;
-		z-index: 5;
-		font-size: 1.5rem;
-	}
-
-	span:hover {
-		color: red;
-	}
-
 	small::before,
 	label::before {
 		content: "* ";
@@ -118,5 +129,9 @@
 		cursor: pointer;
 		font-size: 1.2rem;
 		margin-top: 1rem;
+	}
+
+	input[type="checkbox"] {
+		margin-left: 0.5rem;
 	}
 </style>

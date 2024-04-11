@@ -21,6 +21,7 @@
 			price: Number(formData.get("edit-product-price") as string),
 			categoryId: formData.get("edit-product-category") as string,
 			stock: Number(formData.get("edit-product-stock") as string),
+			isRawMaterial: Boolean(formData.get("edit-product-raw") as string),
 		};
 		const id = _id!.textContent!;
 
@@ -88,6 +89,11 @@
 				<option value={category.id}>{category.name}</option>
 			{/each}
 		</select>
+
+		<label for="edit-product-raw">
+			¿Es Materia Prima?
+			<input type="checkbox" name="edit-product-raw" id="edit-product-raw" />
+		</label>
 
 		<button>Editar</button>
 	</form>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ProductsTable from "@/components/Products/ProductsTable.svelte";
-	import { products, search } from "@/services/products";
+	import { products, search, rawMaterials } from "@/services/products";
 	import type { Product } from "@/types";
 	import ProductsDialogs from "./ProductsDialogs.svelte";
 	import ProductsHeader from "./ProductsHeader.svelte";
@@ -14,6 +14,13 @@
 	};
 
 	$: filteredProducts = $products.filter(
+		(product) =>
+			product.name.toLowerCase().includes($search.toLowerCase()) ||
+			product.category.name.toLowerCase().includes($search.toLowerCase()) ||
+			product.id.toLowerCase().includes($search.toLowerCase())
+	);
+
+	$: filteredRaw = $rawMaterials.filter(
 		(product) =>
 			product.name.toLowerCase().includes($search.toLowerCase()) ||
 			product.category.name.toLowerCase().includes($search.toLowerCase()) ||
@@ -70,11 +77,32 @@
 <div class="page">
 	<ProductsHeader {filterOrderDesc} {filterByKey} {filterkey} {toggleOrder} />
 	<ProductsDialogs />
-	<ProductsTable products={filteredProducts} {filterClickEvent} />
+	<section>
+		<ProductsTable products={filteredProducts} {filterClickEvent} />
+		<div id="rawMaterials">
+			<header>
+				<h2>Materias Primas</h2>
+			</header>
+			<ProductsTable products={filteredRaw} {filterClickEvent} />
+		</div>
+	</section>
 </div>
 
 <style>
 	div.page {
 		padding: 1rem 2rem;
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	header {
+		padding: 1rem;
+		background-color: var(--color);
+		border-radius: var(--radius);
+		margin-bottom: 1rem;
 	}
 </style>

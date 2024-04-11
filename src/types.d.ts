@@ -6,6 +6,7 @@ export interface Product {
 	updatedAt: string;
 	categoryId: string;
 	category: Category;
+	isRawMaterial: boolean;
 }
 
 export interface Category {
