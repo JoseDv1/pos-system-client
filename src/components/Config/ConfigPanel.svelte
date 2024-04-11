@@ -39,7 +39,7 @@
 		<p class="version">
 			Aplication Version: {__COMMIT_HASH__.slice(0, 7)}
 			{#await getGHCommit() then commit}
-				{#if commit !== __COMMIT_HASH__}
+				{#if commit != __COMMIT_HASH__}
 					(Update Available)
 				{:else}
 					(latest)
@@ -48,9 +48,10 @@
 		</p>
 		<p class="version">
 			{#await getAPIversion() then version}
-				Server Version: {version.slice(0, 7)}
+				{@const slice = version.slice(0, 7)}
+				Server Version: {slice}
 				{#await getGHAPICommit() then commit}
-					{#if commit !== version}
+					{#if commit.slice(0, 7) != version.slice(0, 7)}
 						(Update Available)
 					{:else}
 						(latest)
