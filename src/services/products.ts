@@ -19,6 +19,7 @@ type UpdateProductData = {
 
 
 export const products = writable<Product[]>([]);
+export const rawMaterials = writable<Product[]>([]);
 export let search = writable('');
 
 
@@ -26,9 +27,13 @@ export const fetchProductsService = (async () => {
 	try {
 		loading.set(true);
 		const res = await fetch(`${API_URL}/products`);
-		const data = await res.json();
-		products.set(data);
-		return data;
+		const data: Product[] = await res.json();
+
+		const prod = data.filter((product) => !product.isRawMaterial);
+		const rawMats = data.filter((product) => product.isRawMaterial);
+		products.set(prod);
+		rawMaterials.set(rawMats);
+		return [prod, rawMats];
 	} catch (error) {
 		createToast("Error al consultar los productos", "error");
 	} finally {
@@ -46,11 +51,19 @@ export const addProductService = async (productData: CreateProductData) => {
 	});
 
 	const addedProduct = await response.json();
-	products.update((items) => [...items, addedProduct]);
+	const isRawMaterial = addedProduct.isRawMaterial;
 
+
+	if (!isRawMaterial) {
+		// Add to products store
+		products.update((items) => [...items, addedProduct]);
+	} else {
+		// Add to rawMaterials store
+		rawMaterials.update((items) => [...items, addedProduct]);
+	}
 }
 
-export const updateProductService = async (productId: string, productData: UpdateProductData) => {
+export const updateProductService = async (productId: string, productData: any) => {
 	try {
 		const response = await fetch(`${API_URL}/products/${productId}`, {
 			method: "PUT",
@@ -60,15 +73,30 @@ export const updateProductService = async (productId: string, productData: Updat
 			body: JSON.stringify(productData),
 		});
 		const updatedProduct = await response.json();
-		products.update((prevProducts) => {
-			const updatedProducts = prevProducts.map((product) => {
-				if (product.id === updatedProduct.id) {
-					return updatedProduct;
-				}
-				return product;
+		if (updatedProduct.isRawMaterial) {
+			rawMaterials.update((prevRawMaterials) => {
+				const updatedRawMaterials = prevRawMaterials.map((product) => {
+					if (product.id === updatedProduct.id) {
+						return updatedProduct;
+					}
+					return product;
+				});
+				return updatedRawMaterials;
 			});
-			return updatedProducts;
-		});
+		} else {
+			products.update((prevProducts) => {
+				const updatedProducts = prevProducts.map((product) => {
+					if (product.id === updatedProduct.id) {
+						return updatedProduct;
+					}
+					return product;
+				});
+				return updatedProducts;
+			});
+		}
+
+
+
 	} catch (error) {
 		createToast("Error al actualizar el producto", "error");
 	}

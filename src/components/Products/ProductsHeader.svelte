@@ -55,11 +55,6 @@
 </header>
 
 <style>
-	header div {
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-	}
 	header {
 		display: flex;
 		justify-content: space-between;
@@ -69,6 +64,13 @@
 		background-color: var(--color);
 		border-radius: var(--radius);
 		gap: 1rem;
+		width: 100%;
+	}
+
+	header div {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
 	}
 
 	button {
