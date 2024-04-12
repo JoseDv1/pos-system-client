@@ -415,3 +415,31 @@ export const updateSaleNote = async (id: string, note: string) => {
 
 	return data;
 }
+
+export const changeClientService = async (id: string, clientId: string) => {
+	const response = await fetch(`${API_URL}/sales/${id}`,
+		{
+			method: "PUT",
+			body: JSON.stringify({
+				clientId,
+			}),
+		});
+	const data = await response.json();
+	console.log(data)
+
+	// Update the state
+	sales.update((prevSales) => {
+		return prevSales.map((sale) => {
+			if (sale.id === data.id) {
+				return {
+					...sale,
+					client: data.client
+				};
+			}
+			return sale;
+		});
+	});
+
+
+	return data;
+}
