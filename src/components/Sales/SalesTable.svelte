@@ -1,6 +1,7 @@
 <script>
 	import { parseId, parseIsoDate } from "@/services/utils";
 	import {
+		changeClientService,
 		deleteSaleService,
 		fetchByidSaleService,
 		filteredSales,
@@ -16,6 +17,7 @@
 	import MoneyWithdrawIcon from "@/assets/svgs/bx-money-withdraw.svg?raw";
 	import RightArrowAltIcon from "@/assets/svgs/bx-right-arrow-alt.svg?raw";
 	import DashIcon from "@/assets/svgs/bx-dashboard.svg?raw";
+	import { clients } from "@/services/clients";
 
 	async function handleTogglePopover(e) {
 		const $textarea = e.target.querySelector("textarea");
@@ -97,6 +99,7 @@
 				</td>
 			</tr>
 
+			<!-- MARK: Actions -->
 			<div popover id={`actions-${sale.id}`}>
 				<button
 					class="btn-delete"
@@ -137,6 +140,9 @@
 					Marcar como {sale?.status == "PENDING" ? "Pagado" : "Pendiente"}
 					{@html MoneyWithdrawIcon}
 				</button>
+				<button popovertarget={`change-client-${sale.id}`}>
+					Cambiar Mesero
+				</button>
 				<button popovertarget={`dialog-note-${sale.id}`}>Nota</button>
 				<a class="btn-edit" href={`/dashboard/sales/${sale?.id}`}>
 					Ir a la venta
@@ -144,6 +150,7 @@
 				</a>
 			</div>
 
+			<!-- MARK: Note -->
 			<dialog
 				popover
 				id={`dialog-note-${sale.id}`}
@@ -154,6 +161,43 @@
 					<h1>Nota</h1>
 					<textarea id={`dialog-note-${sale.id}-text`}></textarea>
 				</div>
+			</dialog>
+
+			<dialog
+				popover="auto"
+				id={`change-client-${sale.id}`}
+				class="change-client"
+			>
+				<form>
+					<button
+						type="button"
+						popovertargetaction="hide"
+						popovertarget={`change-client-${sale.id}`}>&times;</button
+					>
+					<h1>Cambiar cliente</h1>
+					<div>
+						<input type="text" disabled value={sale?.client?.name} />
+						<select
+							name="select-new-client"
+							id={`select-new-client-${sale.id}`}
+						>
+							{#each $clients as client}
+								<option value={client.id}>{client.name}</option>
+							{/each}
+						</select>
+					</div>
+					<button
+						popovertarget="change-client-${sale.id}"
+						on:click|preventDefault={async () => {
+							await changeClientService(
+								sale.id,
+								document.getElementById(`select-new-client-${sale.id}`).value
+							);
+						}}
+					>
+						Cambiar mesero
+					</button>
+				</form>
 			</dialog>
 		{/each}
 	{/if}
@@ -273,5 +317,38 @@
 		max-width: 700px;
 		font-size: 1rem;
 		padding: 1rem;
+	}
+
+	.change-client {
+		& form {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		& div {
+			display: flex;
+			gap: 1rem;
+		}
+
+		& input,
+		select {
+			width: 100%;
+			padding: 0.5rem;
+			border-radius: var(--radius);
+			border: 1px solid var(--accent);
+			flex: 1;
+		}
+
+		& button:last-of-type {
+			padding: 0.5rem;
+			border-radius: var(--radius);
+			background-color: var(--accent);
+			color: white;
+			border: none;
+			cursor: pointer;
+			background: var(--primary);
+			font-size: 1rem;
+		}
 	}
 </style>
