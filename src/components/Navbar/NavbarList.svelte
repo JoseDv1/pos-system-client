@@ -52,12 +52,12 @@
 		label="Ventas"
 		className={currentUrl === "/dashboard/sales" ? "current-page" : ""}
 	/>
-	<!-- <NavbarIcon
+	<NavbarIcon
 		href="/dashboard/supplies"
 		icon={Package}
 		label="Provisiones"
 		className={currentUrl === "/dashboard/supplies" ? "current-page" : ""}
-	/> -->
+	/>
 	<NavbarIcon
 		href="/dashboard/providers"
 		icon={Car}

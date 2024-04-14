@@ -2,9 +2,10 @@
 	import {
 		totalSalesCount,
 		totalSalesAmount,
-		searchDate,
 		lastfiveDaysSales,
 	} from "@/services/sales";
+
+	import { searchDate } from "@/services/stores";
 
 	$lastfiveDaysSales;
 </script>

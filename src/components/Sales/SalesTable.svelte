@@ -238,7 +238,7 @@
 		}
 	}
 
-	tr:nth-child(odd) {
+	tr:nth-of-type(odd) {
 		background-color: var(--accent);
 		border-radius: 1rem;
 	}

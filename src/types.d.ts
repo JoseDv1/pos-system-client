@@ -1,3 +1,6 @@
+import type Products from "./pages/dashboard/products.astro";
+import type { products } from "./services/products";
+
 export interface Product {
 	id: string;
 	name: string;
@@ -47,4 +50,21 @@ export interface SaleProduct {
 	unitCost: number;
 	product: Product;
 	sale: Sale;
+}
+
+type Supply = {
+	id: string;
+	totalCost: number;
+	date: string;
+	providerId: string | null;
+	provider: Provider
+	supplyProducts: ProductsOnSupply[];
+}
+
+type ProductsOnSupply = {
+	productId: string;
+	supplyId: string;
+	quantity: number;
+	unitCost: number;
+	product: Product;
 }

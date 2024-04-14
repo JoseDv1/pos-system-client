@@ -32,3 +32,8 @@ export function parseIsoDate(date: string) {
 		} 
 	`;
 }
+
+export const moneyFormater = new Intl.NumberFormat("es-CO", {
+	style: "currency",
+	currency: "COP",
+});

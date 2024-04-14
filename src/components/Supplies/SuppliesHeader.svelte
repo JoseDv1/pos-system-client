@@ -1,28 +1,18 @@
 <script>
 	import {
-		createSaleService,
-		clientsFilter,
-		totalSalesAmount,
-		pendingSalesCount,
-		totalClientSalesAmount,
-		pendingSalesCountByClient,
-		pendingSalesAmount,
-		pendingSalesAmountByClient,
-		markAllSalesAsPaidByClientService,
-		filteredSales,
-	} from "@/services/sales";
+		providersFilter,
+		createSupply,
+		totalAmount,
+	} from "@/services/supplies";
 	import { searchDate } from "@/services/stores";
-
-	import { clients } from "@/services/clients";
-	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
-
-	import paidIcon from "@/assets/svgs/bx-money-withdraw.svg?raw";
+	import { providers } from "@/services/providers";
 	import { slide } from "svelte/transition";
+	import PlusIcon from "@/assets/svgs/bx-plus.svg?raw";
 </script>
 
 <header>
 	<section>
-		<h1>Ventas y pedidos</h1>
+		<h1>Provisiones y facturas</h1>
 		<search>
 			<input
 				type="date"
@@ -32,30 +22,16 @@
 				bind:value={$searchDate}
 			/>
 
-			<select name="Client" id="client-select" bind:value={$clientsFilter}>
+			<select name="Supply" id="client-select" bind:value={$providersFilter}>
 				<option value="" selected>Todos</option>
-				{#each $clients as client}
-					<option value={client.id}>{client.name}</option>
+				{#each $providers as provider}
+					<option value={provider.id}>{provider.name}</option>
 				{/each}
 			</select>
 		</search>
-		{#if $clientsFilter !== "" && $searchDate == new Date()
+		{#if $providersFilter !== "" && $searchDate == new Date()
 					.toISOString()
 					.split("T")[0]}
-			{#if $filteredSales.length > 0}
-				<button
-					class="btn-success"
-					transition:slide={{
-						axis: "x",
-					}}
-					on:click={async () => {
-						await markAllSalesAsPaidByClientService($clientsFilter);
-					}}
-				>
-					{@html paidIcon}
-					Marcar todo como pagado</button
-				>
-			{/if}
 			<div
 				class="actions"
 				transition:slide={{
@@ -65,7 +41,7 @@
 				<button
 					class="btn-edit"
 					on:click={async () => {
-						await createSaleService($clientsFilter);
+						await createSupply($providersFilter);
 					}}
 				>
 					{@html PlusIcon}
@@ -77,36 +53,11 @@
 	<footer>
 		<div>
 			<p>
-				<b>Pendiente:</b>
+				<b>Total Gastos Dia: </b>
 				{new Intl.NumberFormat("es-CO", {
 					style: "currency",
 					currency: "COP",
-				}).format($pendingSalesAmount)}
-			</p>
-			<p>
-				<b>Total Dia: </b>
-				{new Intl.NumberFormat("es-CO", {
-					style: "currency",
-					currency: "COP",
-				}).format($totalSalesAmount)}
-			</p>
-			<p><b>Pendientes: </b> {$pendingSalesCount}</p>
-		</div>
-		<div>
-			<p>
-				<b>Total Cliente: </b>
-				{new Intl.NumberFormat("es-CO", {
-					style: "currency",
-					currency: "COP",
-				}).format($totalClientSalesAmount)}
-			</p>
-			<p><b>Pendientes Cliente: </b> {$pendingSalesCountByClient}</p>
-			<p class="pending-amount">
-				<b>Total Pendientes Clientes: </b>
-				{new Intl.NumberFormat("es-CO", {
-					style: "currency",
-					currency: "COP",
-				}).format($pendingSalesAmountByClient)}
+				}).format($totalAmount)}
 			</p>
 		</div>
 	</footer>
@@ -165,20 +116,20 @@
 		border-radius: var(--radius);
 		border: 0;
 		flex-shrink: 0;
-		font-size: 1rem;
 		min-width: 150px;
+		font-size: 1rem;
 	}
 
 	header section search select option {
 		padding: 0.5rem;
 	}
 
-	header footer {
+	/* header footer {
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: wrap;
 		gap: 0.5rem;
-	}
+	} */
 
 	header footer div {
 		display: flex;

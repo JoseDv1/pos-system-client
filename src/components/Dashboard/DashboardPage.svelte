@@ -3,7 +3,8 @@
 	import DashboardSalesByClient from "./DashboardSalesByClient.svelte";
 	import DashboardHeader from "./DashboardHeader.svelte";
 	import { onMount } from "svelte";
-	import { searchDate, clientsFilter } from "@/services/sales";
+	import { clientsFilter } from "@/services/sales";
+	import { searchDate } from "@/services/stores";
 
 	onMount(() => {
 		searchDate.set(new Date().toISOString().split("T")[0]);

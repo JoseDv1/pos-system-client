@@ -1,0 +1,11 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ProductsOnSupplyPage from "@/components/ProductsOnSupplies/ProductsOnSupplyPage.svelte";
+
+export const prerender = false;
+const { id } = Astro.params;
+---
+
+<Layout title="Detalle Factura">
+	<ProductsOnSupplyPage client:only="svelte" supplyId={id} />
+</Layout>

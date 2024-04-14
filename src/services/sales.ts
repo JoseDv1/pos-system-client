@@ -1,15 +1,16 @@
 import { API_URL } from "./constants";
 import { derived, get, writable } from "svelte/store";
-import { loading } from "./stores";
+import { loading, searchDate } from "./stores";
 import { createToast } from "./utils";
 import type { Sale } from "@/types";
 import { fastSale } from "./configs";
 import { Chart } from "chart.js/auto";
+import { moneyFormater } from "./utils";
 
 // #region States
 export const sales = writable<Sale[]>([]);
 export const clientsFilter = writable<string>("");
-export const searchDate = writable<string>(new Date().toISOString().split("T")[0]);
+
 
 export const filteredSales = derived([sales, clientsFilter, searchDate], ([$sales, $clientsFilter, $searchDate]) => {
 	const filtered = $sales.filter((sale) => {
@@ -286,10 +287,7 @@ export const generateReportByDateService = async (from: string, to: string) => {
 		year: "numeric",
 
 	});
-	const moneyFormater = new Intl.NumberFormat("es-CO", {
-		style: "currency",
-		currency: "COP",
-	});
+
 
 	const totalIncome = data.reduce((acc: number, sale: any) => acc + sale.total, 0);
 
