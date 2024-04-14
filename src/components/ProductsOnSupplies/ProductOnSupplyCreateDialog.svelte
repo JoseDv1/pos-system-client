@@ -5,14 +5,11 @@
 	let search = "";
 	let quantity;
 	let total;
-	let unitPrice;
+	let unitCost;
 
 	const addProductOnSupplyEvent = async (e) => {
 		const $form = e.target;
-		const formData = new FormData($form);
 		const productId = $form.querySelector("input[type=radio]:checked")?.value;
-		const quantity = Number(formData.get("productOnSupplyquantity"));
-		const unitCost = Number(formData.get("productOnSupplyUnitCost"));
 
 		// Call the service to add the product on supply
 		await addProductToSupply(supplyId, {
@@ -20,6 +17,9 @@
 			quantity,
 			unitCost,
 		});
+
+		// Reset the form
+		$form.reset();
 	};
 
 	$: filteredProducts = $products.filter((product) =>
@@ -82,6 +82,7 @@
 				bind:value={quantity}
 				required
 				min="0"
+				step="1"
 				name="productOnSupplyquantity"
 			/>
 		</label>
@@ -102,14 +103,15 @@
 					placeholder="Precio por unidad... "
 					required
 					min="0"
+					step="any"
 					name="productOnSupplyUnitCost"
-					bind:value={unitPrice}
+					bind:value={unitCost}
 					on:input={() => {
-						if (quantity && total !== unitPrice * quantity) {
-							total = unitPrice * quantity;
+						if (quantity && total !== unitCost * quantity) {
+							total = unitCost * quantity;
 							document.getElementById("productOnSupplyTotalPrice").disabled =
 								true;
-							if (unitPrice === null || unitPrice === undefined) {
+							if (unitCost === null || unitCost === undefined) {
 								document.getElementById("productOnSupplyTotalPrice").disabled =
 									false;
 								total = null;
@@ -123,19 +125,20 @@
 				<input
 					type="number"
 					bind:value={total}
+					step="any"
 					min="0"
 					id="productOnSupplyTotalPrice"
 					name="productOnSupplyTotalPrice"
 					placeholder="Precio del paquete o caja..."
 					on:input={() => {
-						if (quantity && unitPrice !== total / quantity) {
-							unitPrice = total / quantity;
+						if (quantity && unitCost !== total / quantity) {
+							unitCost = total / quantity;
 							document.getElementById("productOnSupplyUnitCost").disabled =
 								true;
 							if (total === null || total === undefined) {
 								document.getElementById("productOnSupplyUnitCost").disabled =
 									false;
-								unitPrice = null;
+								unitCost = null;
 							}
 						}
 					}}

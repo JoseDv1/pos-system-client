@@ -30,8 +30,12 @@ export async function addProductToSupply(supplyId: string, product: Pick<Product
 			},
 			body: JSON.stringify(product),
 		});
+		if (!res.ok) {
+			throw new Error("Error al agregar el producto a la venta");
+		}
 		const data = await res.json();
 		productsOnSupply.update((products) => [...products, data]);
+
 	} catch (error) {
 		createToast("Error al agregar el producto a la venta", "error");
 	}
@@ -46,6 +50,9 @@ export async function updateProductOnSupply(supplyId: string, productId: string,
 			},
 			body: JSON.stringify(product),
 		});
+
+
+
 		const data = await res.json();
 		productsOnSupply.update((products) => products.map((p) => (p.productId === data.productId ? data : p)));
 

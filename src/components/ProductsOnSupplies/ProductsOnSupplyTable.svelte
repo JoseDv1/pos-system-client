@@ -1,6 +1,9 @@
 <script>
 	import { loading } from "@/services/stores";
-	import { productsOnSupply } from "@/services/productsOnSupply";
+	import {
+		deleteProductOnSupply,
+		productsOnSupply,
+	} from "@/services/productsOnSupply";
 	import { moneyFormater } from "@/services/utils";
 	import ProductOnSupplyEditDialog from "./ProductOnSupplyEditDialog.svelte";
 	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
@@ -46,7 +49,17 @@
 
 					<ProductOnSupplyEditDialog {productOnSupply} />
 
-					<button class="btn-delete">
+					<button
+						class="btn-delete"
+						on:click={async () => {
+							if (confirm("¿Estás seguro de eliminar este producto?")) {
+								await deleteProductOnSupply(
+									productOnSupply.supplyId,
+									productOnSupply.productId
+								);
+							}
+						}}
+					>
 						{@html TrashIcon}
 					</button>
 				</td>
