@@ -8,28 +8,27 @@
 	<table>
 		<thead>
 			<th>Mesero</th>
-			<th>Ventas</th>
 			<th>Total</th>
 		</thead>
 		<tbody>
 			{#each $clients as waiter}
-				<tr>
-					<td>{waiter.name}</td>
-					<td>
-						{$filteredSales.filter((sale) => sale.clientId === waiter.id)
-							.length}
-					</td>
-					<td>
-						{new Intl.NumberFormat("es-CO", {
-							style: "currency",
-							currency: "COP",
-						}).format(
-							$filteredSales
-								.filter((sale) => sale.clientId === waiter.id)
-								.reduce((acc, sale) => acc + sale.totalCost, 0)
-						)}
-					</td>
-				</tr>
+				{#if $filteredSales
+					.filter((sale) => sale.clientId === waiter.id)
+					.reduce((acc, sale) => acc + sale.totalCost, 0) > 0}
+					<tr>
+						<td>{waiter.name}</td>
+						<td>
+							{new Intl.NumberFormat("es-CO", {
+								style: "currency",
+								currency: "COP",
+							}).format(
+								$filteredSales
+									.filter((sale) => sale.clientId === waiter.id)
+									.reduce((acc, sale) => acc + sale.totalCost, 0)
+							)}
+						</td>
+					</tr>
+				{/if}
 			{/each}
 		</tbody>
 	</table>
