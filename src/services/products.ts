@@ -10,14 +10,6 @@ type CreateProductData = {
 	categoryId: string;
 }
 
-type UpdateProductData = {
-	name?: string;
-	price?: number;
-	categoryId?: string;
-	stock?: number;
-}
-
-
 export const products = writable<Product[]>([]);
 export const rawMaterials = writable<Product[]>([]);
 export let search = writable('');

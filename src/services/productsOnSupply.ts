@@ -1,4 +1,4 @@
-import type { ProductsOnSupply, Supply } from "@/types";
+import type { ProductsOnSupply } from "@/types";
 import { loading } from "./stores";
 import { createToast } from "./utils";
 import { API_URL } from "./constants";

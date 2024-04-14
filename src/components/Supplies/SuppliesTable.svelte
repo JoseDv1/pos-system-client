@@ -25,7 +25,7 @@
 	{:else}
 		{#each $filteredSupplies as supply}
 			<tr>
-				<td>{parseId(supply.id)}</td>
+				<td>#{parseId(supply.id)}</td>
 				<td>{parseIsoDate(supply.date)}</td>
 				<td>{supply.provider?.name}</td>
 				<td>{moneyFormater.format(supply.totalCost)}</td>

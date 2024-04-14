@@ -103,7 +103,7 @@ export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 
 
 			// Create the chart
-			const chart = new Chart(ctx, {
+			new Chart(ctx, {
 				type: "bar",
 				data: {
 					labels,
@@ -254,7 +254,7 @@ export const markAllSalesAsPaidByClientService = async (clientId: string) => {
 		const response = await fetch(`${API_URL}/sales/paid/${clientId}`, {
 			method: "PUT",
 		});
-		const data = await response.json(); // This returns the count of updated sales not the updated sales
+		await response.json(); // This returns the count of updated sales not the updated sales
 
 		// Update state
 		sales.update((prevSales) => {

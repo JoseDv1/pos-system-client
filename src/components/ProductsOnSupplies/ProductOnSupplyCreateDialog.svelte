@@ -104,7 +104,7 @@
 					min="0"
 					name="productOnSupplyUnitCost"
 					bind:value={unitPrice}
-					on:change={() => {
+					on:input={() => {
 						if (quantity && total !== unitPrice * quantity) {
 							total = unitPrice * quantity;
 							document.getElementById("productOnSupplyTotalPrice").disabled =
@@ -127,7 +127,7 @@
 					id="productOnSupplyTotalPrice"
 					name="productOnSupplyTotalPrice"
 					placeholder="Precio del paquete o caja..."
-					on:change={() => {
+					on:input={() => {
 						if (quantity && unitPrice !== total / quantity) {
 							unitPrice = total / quantity;
 							document.getElementById("productOnSupplyUnitCost").disabled =

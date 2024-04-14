@@ -2,8 +2,7 @@
 	import { loading } from "@/services/stores";
 	import { productsOnSupply } from "@/services/productsOnSupply";
 	import { moneyFormater } from "@/services/utils";
-
-	import plusIcon from "@/assets/svgs/bx-plus.svg?raw";
+	import ProductOnSupplyEditDialog from "./ProductOnSupplyEditDialog.svelte";
 	import EditIcon from "@/assets/svgs/bx-edit.svg?raw";
 	import TrashIcon from "@/assets/svgs/bx-trash.svg?raw";
 </script>
@@ -37,9 +36,16 @@
 					)}</td
 				>
 				<td>
-					<button class="btn-edit">
+					<button
+						class="btn-edit"
+						popovertarget={`edit-product-on-supply-dialog-${productOnSupply.productId}`}
+						popovertargetaction="show"
+					>
 						{@html EditIcon}
 					</button>
+
+					<ProductOnSupplyEditDialog {productOnSupply} />
+
 					<button class="btn-delete">
 						{@html TrashIcon}
 					</button>
@@ -70,11 +76,11 @@
 
 	td,
 	th {
-		&:first-child {
+		&:first-of-type {
 			border-radius: 1rem 0 0 1rem;
 		}
 
-		&:last-child {
+		&:last-of-type {
 			text-align: end;
 			border-radius: 0 1rem 1rem 0;
 		}
@@ -84,11 +90,11 @@
 		}
 	}
 
-	td:nth-child(3) {
+	td:nth-of-type(3) {
 		text-transform: capitalize;
 	}
 
-	tr:nth-child(odd) {
+	tr:nth-of-type(even) {
 		background-color: var(--accent);
 		border-radius: 1rem;
 	}

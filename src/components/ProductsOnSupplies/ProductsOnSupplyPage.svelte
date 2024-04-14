@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 	import ProductsOnSupplyTable from "./ProductsOnSupplyTable.svelte";
 	import ProductsOnSupplyHeader from "./PŕoductsOnSupplyHeader.svelte";
-	import ProductOnSupplyDialogs from "./ProductOnSupplyDialogs.svelte";
+	import ProductOnSupplyCreateDialog from "./ProductOnSupplyCreateDialog.svelte";
 	import { fetchProductsOnSupply } from "@/services/productsOnSupply";
 	export let supplyId;
 
@@ -14,7 +14,7 @@
 <main>
 	<ProductsOnSupplyHeader {supplyId} />
 	<ProductsOnSupplyTable />
-	<ProductOnSupplyDialogs {supplyId} />
+	<ProductOnSupplyCreateDialog {supplyId} />
 </main>
 
 <style>

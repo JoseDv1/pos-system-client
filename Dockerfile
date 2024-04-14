@@ -16,7 +16,7 @@ COPY --from=install /temp/dependencies/node_modules node_modules
 # Install git to be able to build the client
 RUN apt update && apt install -y git
 COPY . .
-
+RUN bunx astro telemetry disable
 RUN bun run build
 
 
