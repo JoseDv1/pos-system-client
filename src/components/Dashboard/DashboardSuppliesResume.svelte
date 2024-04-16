@@ -1,18 +1,15 @@
 <script>
-	import { totalSalesAmount, lastDaysSales } from "@/services/sales";
-	$lastDaysSales;
+	import { lastDaysSupplies, totalSuppliesAmount } from "@/services/supplies";
+	import { moneyFormater } from "@/services/utils";
+	$lastDaysSupplies;
 </script>
 
 <article>
 	<h1>
-		Total de ventas del dia: {new Intl.NumberFormat("es-CO", {
-			style: "currency",
-			currency: "COP",
-		}).format($totalSalesAmount)}
+		Total Gastos del dia: {moneyFormater.format($totalSuppliesAmount)}
 	</h1>
-
 	<section>
-		<canvas id="salesChart"></canvas>
+		<canvas id="suppliesChart"></canvas>
 	</section>
 </article>
 

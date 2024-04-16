@@ -31,8 +31,8 @@
 			address: formData.get("edit-client-address") as string,
 		};
 
-		if (data.email === "") data.email = null;
-		if (data.address === "") data.address = null;
+		if (data.email === "") delete data.email;
+		if (data.address === "") delete data.address;
 
 		await updateClientService(id, data);
 		$form.reset();

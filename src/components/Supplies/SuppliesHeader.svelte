@@ -2,7 +2,7 @@
 	import {
 		providersFilter,
 		createSupply,
-		totalAmount,
+		totalSuppliesAmount,
 	} from "@/services/supplies";
 	import { searchDate } from "@/services/stores";
 	import { providers } from "@/services/providers";
@@ -57,7 +57,7 @@
 				{new Intl.NumberFormat("es-CO", {
 					style: "currency",
 					currency: "COP",
-				}).format($totalAmount)}
+				}).format($totalSuppliesAmount)}
 			</p>
 		</div>
 	</footer>

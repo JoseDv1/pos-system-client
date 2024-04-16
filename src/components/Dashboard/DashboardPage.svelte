@@ -2,6 +2,8 @@
 	import DashboardSalesResume from "./DashboardSalesResume.svelte";
 	import DashboardSalesByClient from "./DashboardSalesByClient.svelte";
 	import DashboardHeader from "./DashboardHeader.svelte";
+	import DashboardSuppliesResume from "./DashboardSuppliesResume.svelte";
+	import DashboardResumeSection from "./DashboardResumeSection.svelte";
 	import { onMount } from "svelte";
 	import { clientsFilter } from "@/services/sales";
 	import { searchDate } from "@/services/stores";
@@ -17,7 +19,9 @@
 
 	<section>
 		<DashboardSalesResume />
+		<DashboardSuppliesResume />
 		<DashboardSalesByClient />
+		<DashboardResumeSection />
 	</section>
 </main>
 
@@ -28,13 +32,15 @@
 
 	main > section {
 		border-radius: var(--radius);
-		display: flex;
-		justify-content: start;
-		align-items: stretch;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		gap: 1rem;
 
 		& > * {
-			flex: 1;
+			background-color: var(--color);
+			padding: 1rem;
+			border-radius: var(--radius);
+			width: 100%;
 		}
 	}
 </style>

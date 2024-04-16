@@ -25,9 +25,11 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<Navbar />
+
 		<main>
 			<slot />
 		</main>
+
 		<style>
 			main {
 				margin-left: 8rem;
@@ -41,5 +43,6 @@ const { title } = Astro.props;
 			: document.documentElement.classList.remove("dark");
 	</script>
 
-	<!-- Sistema POS Desarrolado por JoseDv1 (Jose Villegas)  --><!-- Github: https://github.com/JoseDv1 --><!-- Web: https://josedv.com -->
+	<!-- Sistema POS Desarrolado por JoseDv1 (Jose Villegas)  --><!-- Github: https://github.com/JoseDv1 -->
+	<!-- Web: https://josedv.com -->
 </html>

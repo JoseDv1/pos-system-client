@@ -70,15 +70,15 @@ export const pendingSalesAmountByClient = derived([filteredSales], ([$filteredSa
 });
 
 // ---- Dashboard Stats ----
-export const lastfiveDaysSales = derived([sales], ([$sales]) => {
+export const lastDaysSales = derived([sales], ([$sales]) => {
 	const today = new Date();
-	const lastFiveDays = Array.from({ length: 8 }, (_, index) => {
+	const lastDays = Array.from({ length: 8 }, (_, index) => {
 		const date = new Date(today);
 		date.setDate(date.getDate() - index);
 		return date.toISOString().split("T")[0];
 	});
 
-	const sales = lastFiveDays.map((date) => {
+	const sales = lastDays.map((date) => {
 		const total = $sales
 			.filter((sale) => sale.createdAt.split("T")[0] === date)
 			.reduce((acc, sale) => acc + sale.totalCost, 0);
@@ -99,9 +99,6 @@ export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 		});
 		const data = sales.map((sale) => sale.total).reverse();
 		if (ctx) {
-
-
-
 			// Create the chart
 			new Chart(ctx, {
 				type: "bar",
@@ -111,6 +108,9 @@ export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 						{
 							label: "Ventas",
 							data,
+							backgroundColor: "#3cB04344",
+							borderColor: "#3cB043",
+							borderWidth: 1,
 						},
 					],
 				},
@@ -120,10 +120,33 @@ export const lastfiveDaysSales = derived([sales], ([$sales]) => {
 					scales: {
 						y: {
 							beginAtZero: true,
+							ticks: {
+								callback: (value) => new Intl.NumberFormat("es-CO", {
+									style: "currency",
+									currency: "COP",
+								}).format(Number(value)),
+							},
 						},
 					},
+					locale: "es-CO",
+					plugins: {
+						legend: {
+							display: false,
+						},
+						title: {
+							text: "Ventas de los últimos 7 días",
+							display: true,
+							position: "top",
+							fullSize: true,
+							font: {
+								size: 24,
+							},
+						}
+					}
 				},
 			});
+
+
 
 		}
 	}

@@ -1,40 +1,44 @@
 <script>
+	import { searchDate } from "@/services/stores";
 </script>
 
 <header>
-	<header>
-		<h1>
-			{new Date().getHours() < 12
-				? "Buenos Dias"
-				: new Date().getHours() < 18
-					? "Buenas Tardes"
-					: "Buenas Noches"}
-		</h1>
-	</header>
+	<h1>
+		{new Date().getHours() < 12
+			? "Buenos Dias"
+			: new Date().getHours() < 18
+				? "Buenas Tardes"
+				: "Buenas Noches"}
+	</h1>
 
-	<footer>
-		<p>Aqui tienes los resumenes de hoy</p>
-	</footer>
+	<label>
+		Fecha:
+		<input type="date" bind:value={$searchDate} /></label
+	>
 </header>
 
 <style>
-	header:not(header > header) {
+	header {
 		background-color: var(--color);
 		padding: 1rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
-	}
-
-	header > header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 
-	button {
+	input[type="date"] {
+		padding: 0.5rem;
+		border-radius: var(--radius);
+		border: 1px solid var(--accent);
+		font-size: 1rem;
+	}
+
+	label {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: larger;
+		gap: 1rem;
+		font-size: 1.5rem;
 	}
 </style>
