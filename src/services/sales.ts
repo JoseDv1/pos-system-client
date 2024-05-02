@@ -299,7 +299,8 @@ export const generateReportByDateService = async (from: string, to: string) => {
 	const response = await fetch(
 		`http://localhost:3000/api/sales/report?from=${from}&to=${to}`
 	);
-	const data = await response.json();
+	const { sales, supplies } = await response.json();
+
 
 	// Create a new window with the report
 	const reportWindow = window.open("", "_blank");
@@ -312,9 +313,11 @@ export const generateReportByDateService = async (from: string, to: string) => {
 	});
 
 
-	const totalIncome = data.reduce((acc: number, sale: any) => acc + sale.total, 0);
+	const totalIncome = sales.reduce((acc: number, sale: any) => acc + sale.total, 0);
+	const totalExpenses = supplies.reduce((acc: number, supply: any) => acc + supply.total, 0);
 
-	const itemsToShow = data.map(({ date, total }: {
+
+	const salesToShow = sales.map(({ date, total }: {
 		date: string;
 		total: number;
 	}) => {
@@ -325,6 +328,21 @@ export const generateReportByDateService = async (from: string, to: string) => {
 			</tr>
 		`
 	});
+
+	const suppliesToShow = supplies.map(({ date, total }: {
+		date: string;
+		total: number;
+	}) => {
+		return `
+			<tr>
+				<td>${dateFormater.format(new Date(date))}</td>
+				<td>${moneyFormater.format(total)}</td>
+			</tr>
+		`
+	}
+	);
+
+
 
 	const reportContent = ` 
 	<!DOCTYPE html>
@@ -380,6 +398,9 @@ export const generateReportByDateService = async (from: string, to: string) => {
 				<h1>Reporte de ventas</h1>
 				<p>Periodo: ${dateFormater.format(new Date(from))} - ${dateFormater.format(new Date(to))}</p>
 				<p>Total de ventas: ${moneyFormater.format(totalIncome)}</p>
+				<p>Total de gastos: ${moneyFormater.format(totalExpenses)}</p>
+				<p>Utilidad: ${moneyFormater.format(totalIncome - totalExpenses)}</p>
+
 			</header>
 	
 			<main>
@@ -393,12 +414,23 @@ export const generateReportByDateService = async (from: string, to: string) => {
 							</tr>
 						</thead>
 						<tbody>
-							${itemsToShow.join("")}
+							${salesToShow.join("")}
+						</tbody>
+					</table>
+
+					<h2>Gastos Diarios</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Fecha</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							${suppliesToShow.join("")}
 						</tbody>
 					</table>
 				</section>
-	
-			
 			</main>
 		</body>
 	</html>
