@@ -22,12 +22,15 @@
 			client.email ?? "";
 		($form.querySelector("#edit-client-address") as HTMLInputElement).value =
 			client.address ?? "";
+		($form.querySelector("#edit-client-active") as HTMLInputElement).checked =
+			client.active;
 	};
 </script>
 
 <table>
 	<tr>
 		<th>Id</th>
+		<th>Activo</th>
 		<th>Nombre</th>
 		<th>Email</th>
 		<th>Direccion</th>
@@ -45,6 +48,7 @@
 		{#each $clients as client}
 			<tr>
 				<td>#{parseId(client.id)}</td>
+				<td>{client.active ? "Activo" : "Inactivo"}</td>
 				<td>{client.name}</td>
 				<td>{client.email == null ? "Sin Email" : client.email}</td>
 				<td>{client.address == null ? "Sin Direccion" : client.address}</td>

@@ -30,6 +30,7 @@ export interface Client {
 	name: string
 	address: string?;
 	email: string?;
+	active: boolean;
 }
 
 export interface Sale {

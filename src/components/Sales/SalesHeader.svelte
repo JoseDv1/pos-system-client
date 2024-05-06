@@ -34,7 +34,7 @@
 
 			<select name="Client" id="client-select" bind:value={$clientsFilter}>
 				<option value="" selected>Todos</option>
-				{#each $clients as client}
+				{#each $clients.filter((client) => client.active === true) as client}
 					<option value={client.id}>{client.name}</option>
 				{/each}
 			</select>

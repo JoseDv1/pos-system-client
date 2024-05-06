@@ -29,6 +29,8 @@
 			name: formData.get("edit-client-name") as string,
 			email: formData.get("edit-client-email") as string,
 			address: formData.get("edit-client-address") as string,
+			active: ($form.querySelector("#edit-client-active") as HTMLInputElement)
+				.checked,
 		};
 
 		if (data.email === "") delete data.email;
@@ -119,6 +121,13 @@
 				id="edit-client-address"
 				name="edit-client-address"
 				autocomplete="off"
+			/>
+
+			<label for="edit-client-active">Activo</label>
+			<input
+				type="checkbox"
+				id="edit-client-active"
+				name="edit-client-active"
 			/>
 
 			<button>Editar</button>
