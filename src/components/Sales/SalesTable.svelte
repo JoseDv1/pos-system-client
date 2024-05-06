@@ -87,6 +87,13 @@
 						style: "currency",
 						currency: "COP",
 					}).format(sale?.totalCost)}
+					<span class="tooltip">
+						{#each sale.saleProducts as saleProduct}
+							<span>
+								{saleProduct.product?.name} x{saleProduct.quantity}
+							</span>
+						{/each}
+					</span>
 				</td>
 				<td>
 					<button popovertarget={`actions-${sale.id}`}>
@@ -217,7 +224,6 @@
 		padding: 0.5rem 1rem;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		white-space: nowrap;
 		text-align: left;
 		width: fit-content;
 	}
@@ -349,6 +355,29 @@
 			cursor: pointer;
 			background: var(--primary);
 			font-size: 1rem;
+		}
+	}
+
+	td:hover .tooltip {
+		display: inline-block;
+	}
+
+	.tooltip {
+		position: absolute;
+		display: none;
+		background-color: var(--color);
+		border-radius: var(--radius);
+		padding: 0.5rem;
+		box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+		border: 1px solid var(--accent);
+		z-index: 1;
+		max-width: 300px;
+		top: 0;
+
+		& > span {
+			display: block;
+			font-size: 0.8rem;
+			overflow: auto;
 		}
 	}
 </style>
