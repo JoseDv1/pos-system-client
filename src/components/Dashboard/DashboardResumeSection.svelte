@@ -1,13 +1,27 @@
 <script>
 	import { totalSuppliesAmount } from "@/services/supplies";
-	import { totalSalesAmount } from "@/services/sales";
+	import {
+		totalSalesAmount,
+		totalCardSalesAmount,
+		totalCashSalesAmount,
+		totalTransferSalesAmount,
+	} from "@/services/sales";
 	import { moneyFormater } from "@/services/utils";
 </script>
 
 <article>
 	<h1>Resumen del Dia</h1>
 	<p>Total Ingresos: {moneyFormater.format($totalSalesAmount)}</p>
+	<ul>
+		<li>Total Efectivo: {moneyFormater.format($totalCashSalesAmount)}</li>
+		<li>Total Tarjeta: {moneyFormater.format($totalCardSalesAmount)}</li>
+		<li>
+			Total Transferencia: {moneyFormater.format($totalTransferSalesAmount)}
+		</li>
+	</ul>
+
 	<p>Total Egresos: {moneyFormater.format($totalSuppliesAmount)}</p>
+
 	{#if $totalSalesAmount - $totalSuppliesAmount < 0}
 		<p class="lose">
 			Total Perdidas: {moneyFormater.format(

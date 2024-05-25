@@ -7,6 +7,7 @@
 		filteredSales,
 		markSaleAsPaidService,
 		markSaleAsPendingService,
+		setPaymentMethodService,
 		updateSaleNote,
 	} from "@/services/sales";
 	import { loading } from "@/services/stores";
@@ -52,7 +53,7 @@
 
 <table>
 	<tr>
-		<th>Venta ID</th>
+		<th>Metodo de Pago</th>
 		<th>Fecha</th>
 		<th>Mesero</th>
 		<th>Estado</th>
@@ -74,7 +75,13 @@
 			return dateB - dateA;
 		}) as sale}
 			<tr>
-				<td>#{parseId(sale?.id)}</td>
+				<td
+					>{sale?.paymentMethod === "CASH"
+						? "Efectivo"
+						: sale?.paymentMethod === "CARD"
+							? "Tarjeta"
+							: "Transferencia"}</td
+				>
 				<td>{parseIsoDate(sale?.createdAt)}</td>
 				<td>{sale?.client?.name}</td>
 				<td>
@@ -151,6 +158,9 @@
 					Cambiar Mesero
 				</button>
 				<button popovertarget={`dialog-note-${sale.id}`}>Nota</button>
+				<button popovertarget={`dialog-payment-${sale.id}`}>
+					Cambiar metodo de pago</button
+				>
 				<a class="btn-edit" href={`/dashboard/sales/${sale?.id}`}>
 					Ir a la venta
 					{@html RightArrowAltIcon}
@@ -170,6 +180,7 @@
 				</div>
 			</dialog>
 
+			<!-- MARK: Change client -->
 			<dialog
 				popover="auto"
 				id={`change-client-${sale.id}`}
@@ -205,6 +216,35 @@
 						Cambiar mesero
 					</button>
 				</form>
+			</dialog>
+
+			<!-- MARK: Set Payment method -->
+			<dialog popover id={`dialog-payment-${sale.id}`} class="change-method">
+				<div>
+					<button
+						type="button"
+						popovertargetaction="hide"
+						popovertarget={`dialog-payment-${sale.id}`}>&times;</button
+					>
+					<h1>Metodo de pago</h1>
+					<section>
+						<button
+							on:click={async () => {
+								await setPaymentMethodService(sale.id, "CASH");
+							}}>Efectivo</button
+						>
+						<button
+							on:click={async () => {
+								await setPaymentMethodService(sale.id, "TRANSFER");
+							}}>Tranferencia</button
+						>
+						<button
+							on:click={async () => {
+								await setPaymentMethodService(sale.id, "CARD");
+							}}>Tarjeta</button
+						>
+					</section>
+				</div>
 			</dialog>
 		{/each}
 	{/if}
@@ -347,6 +387,31 @@
 		}
 
 		& button:last-of-type {
+			padding: 0.5rem;
+			border-radius: var(--radius);
+			background-color: var(--accent);
+			color: white;
+			border: none;
+			cursor: pointer;
+			background: var(--primary);
+			font-size: 1rem;
+		}
+	}
+
+	.change-method {
+		& div {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		& section {
+			display: flex;
+			gap: 1rem;
+		}
+
+		& button:not([popovertargetaction="hide"]) {
+			flex: 1;
 			padding: 0.5rem;
 			border-radius: var(--radius);
 			background-color: var(--accent);

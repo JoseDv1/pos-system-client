@@ -64,6 +64,21 @@ export const pendingSalesAmount = derived([filteredSaleByDate], ([$filteredSaleB
 	return total;
 });
 
+export const totalCardSalesAmount = derived([filteredSaleByDate], ([$filteredSaleByDate]) => {
+	const total = $filteredSaleByDate.filter((sale) => sale.paymentMethod === "CARD").reduce((acc, sale) => acc + sale.totalCost, 0);
+	return total;
+});
+
+export const totalCashSalesAmount = derived([filteredSaleByDate], ([$filteredSaleByDate]) => {
+	const total = $filteredSaleByDate.filter((sale) => sale.paymentMethod === "CASH").reduce((acc, sale) => acc + sale.totalCost, 0);
+	return total;
+});
+
+export const totalTransferSalesAmount = derived([filteredSaleByDate], ([$filteredSaleByDate]) => {
+	const total = $filteredSaleByDate.filter((sale) => sale.paymentMethod === "TRANSFER").reduce((acc, sale) => acc + sale.totalCost, 0);
+	return total;
+});
+
 export const pendingSalesAmountByClient = derived([filteredSales], ([$filteredSales]) => {
 	const total = $filteredSales.filter((sale) => sale.status === "PENDING").reduce((acc, sale) => acc + sale.totalCost, 0);
 	return total;
@@ -493,6 +508,31 @@ export const changeClientService = async (id: string, clientId: string) => {
 		});
 	});
 
+
+	return data;
+}
+
+export const setPaymentMethodService = async (id: string, paymentMethod: string) => {
+	const response = await fetch(`${API_URL}/sales/${id}/payment-method`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			paymentMethod,
+		}),
+	});
+	const data = await response.json();
+
+	// Update state
+	sales.update((prevSales) => {
+		return prevSales.map((sale) => {
+			if (sale.id === data.id) {
+				return { ...sale, paymentMethod: data.paymentMethod };
+			}
+			return sale;
+		});
+	});
 
 	return data;
 }
