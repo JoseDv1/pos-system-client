@@ -314,7 +314,13 @@ export const generateReportByDateService = async (from: string, to: string) => {
 	const response = await fetch(
 		`http://localhost:3000/api/sales/report?from=${from}&to=${to}`
 	);
-	const { sales, supplies } = await response.json();
+	const { totalExpenses,
+		totalSalesTransfer,
+		totalSalesCard,
+		totalSalesCash,
+		totalSales,
+		sales,
+		supplies } = await response.json();
 
 
 	// Create a new window with the report
@@ -327,9 +333,6 @@ export const generateReportByDateService = async (from: string, to: string) => {
 
 	});
 
-
-	const totalIncome = sales.reduce((acc: number, sale: any) => acc + sale.total, 0);
-	const totalExpenses = supplies.reduce((acc: number, supply: any) => acc + supply.total, 0);
 
 
 	const salesToShow = sales.map(({ date, total }: {
@@ -412,9 +415,12 @@ export const generateReportByDateService = async (from: string, to: string) => {
 			<header>
 				<h1>Reporte de ventas</h1>
 				<p>Periodo: ${dateFormater.format(new Date(from))} - ${dateFormater.format(new Date(to))}</p>
-				<p>Total de ventas: ${moneyFormater.format(totalIncome)}</p>
+				<p>Total de ventas: ${moneyFormater.format(totalSales)}</p>
+				<p>Total de ventas en efectivo: ${moneyFormater.format(totalSalesCash)}</p>
+				<p>Total de ventas con tarjeta: ${moneyFormater.format(totalSalesCard)}</p>
+				<p>Total de ventas con transferencia: ${moneyFormater.format(totalSalesTransfer)}</p>
 				<p>Total de gastos: ${moneyFormater.format(totalExpenses)}</p>
-				<p>Utilidad: ${moneyFormater.format(totalIncome - totalExpenses)}</p>
+				<p>Utilidad: ${moneyFormater.format(totalSales - totalExpenses)}</p>
 
 			</header>
 	
